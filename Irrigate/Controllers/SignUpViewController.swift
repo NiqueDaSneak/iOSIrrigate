@@ -10,6 +10,9 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var signUpEmail: UITextField!
+    @IBOutlet weak var signUpPassword: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +25,10 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func signUpPressed(_ sender: UIButton) {
+        let email = signUpEmail.text
+        let pass = signUpPassword.text
+        
+        print("Email: \(email), Password: \(pass)")
     }
     
     /*

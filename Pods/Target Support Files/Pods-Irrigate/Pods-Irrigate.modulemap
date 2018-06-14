@@ -1,0 +1,6 @@
+framework module Pods_Irrigate {
+  umbrella header "Pods-Irrigate-umbrella.h"
+
+  export *
+  module * { export * }
+}

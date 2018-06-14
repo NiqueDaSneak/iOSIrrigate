@@ -15,9 +15,13 @@
 		62DACD9E20D2CA9800B7BBA7 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD9D20D2CA9800B7BBA7 /* LogInViewController.swift */; };
 		62DACDA020D2CAC000B7BBA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */; };
 		62DACDA220D2CB0500B7BBA7 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */; };
+		853D3D53E1FBB7D454DC8F1D /* Pods_Irrigate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EB0985B0F933497751F198D /* Pods_Irrigate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.debug.xcconfig"; sourceTree = "<group>"; };
+		1A008BECC71A2D3639EEE609 /* Pods-Irrigate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.release.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.release.xcconfig"; sourceTree = "<group>"; };
+		4EB0985B0F933497751F198D /* Pods_Irrigate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Irrigate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62DACD8820D2C9FC00B7BBA7 /* Irrigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Irrigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62DACD8B20D2C9FC00B7BBA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +32,7 @@
 		62DACD9D20D2CA9800B7BBA7 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +40,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				853D3D53E1FBB7D454DC8F1D /* Pods_Irrigate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45DC6D02F41E37AD46C54E59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4EB0985B0F933497751F198D /* Pods_Irrigate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		62DACD7F20D2C9FC00B7BBA7 = {
 			isa = PBXGroup;
 			children = (
 				62DACD8A20D2C9FC00B7BBA7 /* Irrigate */,
 				62DACD8920D2C9FC00B7BBA7 /* Products */,
+				772F7ECE19C09846D56E52A3 /* Pods */,
+				45DC6D02F41E37AD46C54E59 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,8 +109,18 @@
 			children = (
 				62DACD9220D2C9FC00B7BBA7 /* Assets.xcassets */,
 				62DACD9420D2C9FC00B7BBA7 /* LaunchScreen.storyboard */,
+				62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		772F7ECE19C09846D56E52A3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */,
+				1A008BECC71A2D3639EEE609 /* Pods-Irrigate.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,9 +130,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 62DACD9A20D2C9FC00B7BBA7 /* Build configuration list for PBXNativeTarget "Irrigate" */;
 			buildPhases = (
+				EADED7C0DA82637C6DF7BA30 /* [CP] Check Pods Manifest.lock */,
 				62DACD8420D2C9FC00B7BBA7 /* Sources */,
 				62DACD8520D2C9FC00B7BBA7 /* Frameworks */,
 				62DACD8620D2C9FC00B7BBA7 /* Resources */,
+				4B42BE526A08D12084098C92 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -163,6 +191,47 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B42BE526A08D12084098C92 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EADED7C0DA82637C6DF7BA30 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Irrigate-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		62DACD8420D2C9FC00B7BBA7 /* Sources */ = {
@@ -308,6 +377,7 @@
 		};
 		62DACD9B20D2C9FC00B7BBA7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -322,6 +392,7 @@
 		};
 		62DACD9C20D2C9FC00B7BBA7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A008BECC71A2D3639EEE609 /* Pods-Irrigate.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
