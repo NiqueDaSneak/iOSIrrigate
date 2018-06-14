@@ -35,6 +35,7 @@ class SignUpViewController: UIViewController {
                 print(error!)
             } else {
                 // TRANSITION TO OVERVIEW PAGE
+                self.performSegue(withIdentifier: "showOverview", sender: self)
                 print(user!.user)
             }
         }

@@ -12,7 +12,7 @@
         <!--Home Screen View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeScreenViewController" customModule="Irrigate" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OverviewViewController" id="BYZ-38-t0r" customClass="HomeScreenViewController" customModule="Irrigate" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +35,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="DAb-h8-spi" kind="presentation" modalTransitionStyle="flipHorizontal" id="8gn-Sx-qB1"/>
+                                    <segue destination="DAb-h8-spi" kind="presentation" identifier="logIn" modalTransitionStyle="flipHorizontal" id="8gn-Sx-qB1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEn-lG-x4q">
@@ -52,7 +52,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="lto-II-6tY" kind="presentation" modalTransitionStyle="flipHorizontal" id="KWh-Pe-jB3"/>
+                                    <segue destination="lto-II-6tY" kind="presentation" identifier="signUp" modalTransitionStyle="flipHorizontal" id="KWh-Pe-jB3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -108,7 +108,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="Rms-5x-naf"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="backHome" modalTransitionStyle="flipHorizontal" id="Rms-5x-naf"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign Up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bay-CH-Y3x">
@@ -125,6 +125,7 @@
                     <connections>
                         <outlet property="signUpEmail" destination="tEn-Lh-GQf" id="Azg-aD-Ww2"/>
                         <outlet property="signUpPassword" destination="YCC-SK-ofT" id="st9-oA-cXH"/>
+                        <segue destination="pik-QT-vzQ" kind="show" identifier="showOverview" id="qOk-2k-hDL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKs-tC-62L" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -200,7 +201,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="snT-ke-YTd"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="backHome" modalTransitionStyle="flipHorizontal" id="snT-ke-YTd"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HHE-c1-w2a">
@@ -214,6 +215,9 @@
                         <color key="backgroundColor" red="0.71764705882352942" green="0.71372549019607845" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="dkZ-oa-PVa"/>
                     </view>
+                    <connections>
+                        <segue destination="pik-QT-vzQ" kind="show" identifier="showOverview" id="5zp-Zr-6xx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VHb-Te-fqp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -224,6 +228,7 @@
         <image name="logo" width="128" height="138"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="qOk-2k-hDL"/>
         <segue reference="Rms-5x-naf"/>
     </inferredMetricsTieBreakers>
 </document>
