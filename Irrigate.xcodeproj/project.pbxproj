@@ -15,6 +15,7 @@
 		62DACD9E20D2CA9800B7BBA7 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD9D20D2CA9800B7BBA7 /* LogInViewController.swift */; };
 		62DACDA020D2CAC000B7BBA7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */; };
 		62DACDA220D2CB0500B7BBA7 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */; };
+		62DACDA820D2F72C00B7BBA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62DACDA720D2F69E00B7BBA7 /* GoogleService-Info.plist */; };
 		853D3D53E1FBB7D454DC8F1D /* Pods_Irrigate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EB0985B0F933497751F198D /* Pods_Irrigate.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		62DACDA720D2F69E00B7BBA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				62DACDA420D2DBFA00B7BBA7 /* Views */,
 				62DACDA520D2DC0C00B7BBA7 /* Supporting Files */,
 				62DACD9720D2C9FC00B7BBA7 /* Info.plist */,
+				62DACDA720D2F69E00B7BBA7 /* GoogleService-Info.plist */,
 			);
 			path = Irrigate;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62DACD9620D2C9FC00B7BBA7 /* LaunchScreen.storyboard in Resources */,
+				62DACDA820D2F72C00B7BBA7 /* GoogleService-Info.plist in Resources */,
 				62DACD9320D2C9FC00B7BBA7 /* Assets.xcassets in Resources */,
 				62DACD9120D2C9FC00B7BBA7 /* Main.storyboard in Resources */,
 			);
@@ -200,11 +204,13 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);

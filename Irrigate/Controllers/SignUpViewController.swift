@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class SignUpViewController: UIViewController {
 
@@ -28,7 +30,14 @@ class SignUpViewController: UIViewController {
         let email = signUpEmail.text
         let pass = signUpPassword.text
         
-        print("Email: \(email), Password: \(pass)")
+        Auth.auth().createUser(withEmail: email!, password: pass!) { (user, error) in
+            if (error != nil) {
+                print(error!)
+            } else {
+                // TRANSITION TO OVERVIEW PAGE
+                print(user!.user)
+            }
+        }
     }
     
     /*

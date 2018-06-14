@@ -7,4 +7,6 @@ target 'Irrigate' do
 
   # Pods for Irrigate
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+
 end
