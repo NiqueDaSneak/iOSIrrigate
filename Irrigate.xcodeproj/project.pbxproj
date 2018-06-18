@@ -85,6 +85,7 @@
 				62DACDA320D2DBE900B7BBA7 /* Controllers */,
 				62DACDA420D2DBFA00B7BBA7 /* Views */,
 				62DACDA520D2DC0C00B7BBA7 /* Supporting Files */,
+				62B27BFA20D82D41003D9572 /* art.scnassets */,
 				62DACD9720D2C9FC00B7BBA7 /* Info.plist */,
 				62DACDA720D2F69E00B7BBA7 /* GoogleService-Info.plist */,
 			);
@@ -114,7 +115,6 @@
 		62DACDA520D2DC0C00B7BBA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				62B27BFA20D82D41003D9572 /* art.scnassets */,
 				62DACD9220D2C9FC00B7BBA7 /* Assets.xcassets */,
 				62DACD9420D2C9FC00B7BBA7 /* LaunchScreen.storyboard */,
 				62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */,
