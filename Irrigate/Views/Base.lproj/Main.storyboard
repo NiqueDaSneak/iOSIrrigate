@@ -563,13 +563,34 @@
                         <viewLayoutGuide key="safeArea" id="lUZ-Aj-dqa"/>
                     </view>
                     <size key="freeformSize" width="320" height="2050"/>
-                    <connections>
-                        <outlet property="whyCard" destination="ds9-bk-Gcf" id="r8e-DU-wXo"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YiE-Il-fey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1764.375" y="53.87323943661972"/>
+        </scene>
+        <!--Scene View Controller-->
+        <scene sceneID="btg-Ju-IR4">
+            <objects>
+                <viewController id="HA1-o6-Psn" customClass="ARSceneViewController" customModule="Irrigate" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uj5-cp-5am">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Si-po-aeD">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </arscnView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="Wlp-kI-Bto"/>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="5Si-po-aeD" id="BNM-ok-kTi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1ta-X2-22i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="-340.14084507042253"/>
         </scene>
         <!--Log In View Controller-->
         <scene sceneID="zsn-4y-iwz">
@@ -678,7 +699,7 @@
         <image name="whyimg" width="339" height="417"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qOk-2k-hDL"/>
-        <segue reference="o4q-iM-udM"/>
+        <segue reference="5zp-Zr-6xx"/>
+        <segue reference="mRW-q9-Inq"/>
     </inferredMetricsTieBreakers>
 </document>

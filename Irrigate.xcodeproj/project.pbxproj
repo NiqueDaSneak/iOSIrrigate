@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B27BF820D827D8003D9572 /* ARSceneViewController.swift */; };
 		62DACD8C20D2C9FC00B7BBA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8B20D2C9FC00B7BBA7 /* AppDelegate.swift */; };
 		62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */; };
 		62DACD9120D2C9FC00B7BBA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 62DACD8F20D2C9FC00B7BBA7 /* Main.storyboard */; };
@@ -23,6 +24,8 @@
 		0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.debug.xcconfig"; sourceTree = "<group>"; };
 		1A008BECC71A2D3639EEE609 /* Pods-Irrigate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.release.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.release.xcconfig"; sourceTree = "<group>"; };
 		4EB0985B0F933497751F198D /* Pods_Irrigate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Irrigate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		62B27BF820D827D8003D9572 /* ARSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewController.swift; sourceTree = "<group>"; };
+		62B27BFA20D82D41003D9572 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		62DACD8820D2C9FC00B7BBA7 /* Irrigate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Irrigate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62DACD8B20D2C9FC00B7BBA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 		62DACDA320D2DBE900B7BBA7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				62B27BF820D827D8003D9572 /* ARSceneViewController.swift */,
 				62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */,
 				62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */,
 				62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */,
@@ -110,6 +114,7 @@
 		62DACDA520D2DC0C00B7BBA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				62B27BFA20D82D41003D9572 /* art.scnassets */,
 				62DACD9220D2C9FC00B7BBA7 /* Assets.xcassets */,
 				62DACD9420D2C9FC00B7BBA7 /* LaunchScreen.storyboard */,
 				62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */,
@@ -244,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */,
 				62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */,
 				62DACD8C20D2C9FC00B7BBA7 /* AppDelegate.swift in Sources */,
 				62DACDA220D2CB0500B7BBA7 /* OverviewViewController.swift in Sources */,

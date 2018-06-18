@@ -9,24 +9,11 @@
 import UIKit
 
 class OverviewViewController: UIViewController {
-
-    @IBOutlet weak var whyCard: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        whyCard.layer.shadowColor = UIColor.black.cgColor
-        whyCard.layer.shadowOpacity = 1
-        whyCard.layer.shadowOffset = CGSize.zero
-        whyCard.layer.shadowRadius = 10
-        
-        whyCard.layer.shadowPath = UIBezierPath(rect: whyCard.bounds).cgPath
-        
-        whyCard.layer.shouldRasterize = true
-
-
-        
     }
 
     override func didReceiveMemoryWarning() {
