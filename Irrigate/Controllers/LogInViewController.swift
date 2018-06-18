@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LogInViewController: UIViewController {
 
+    @IBOutlet weak var logInEmail: UITextField!
+    @IBOutlet weak var logInPass: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,9 +27,18 @@ class LogInViewController: UIViewController {
     }
     
     @IBAction func logInPressed(_ sender: UIButton) {
+        let email = logInEmail.text
+        let pass = logInPass.text
+        
+        Auth.auth().signIn(withEmail: email!, password: pass!) { (user, error) in
+            if (error != nil) {
+                print(error!)
+            } else {
+                self.performSegue(withIdentifier: "showOverview", sender: self)
+            }
+        }
     }
     
-
     /*
     // MARK: - Navigation
 
