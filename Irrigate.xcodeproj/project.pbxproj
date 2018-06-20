@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EAE55E820D9CAD700702DD3 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 62B27BFA20D82D41003D9572 /* art.scnassets */; };
 		62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B27BF820D827D8003D9572 /* ARSceneViewController.swift */; };
 		62DACD8C20D2C9FC00B7BBA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8B20D2C9FC00B7BBA7 /* AppDelegate.swift */; };
 		62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */; };
@@ -85,7 +86,6 @@
 				62DACDA320D2DBE900B7BBA7 /* Controllers */,
 				62DACDA420D2DBFA00B7BBA7 /* Views */,
 				62DACDA520D2DC0C00B7BBA7 /* Supporting Files */,
-				62B27BFA20D82D41003D9572 /* art.scnassets */,
 				62DACD9720D2C9FC00B7BBA7 /* Info.plist */,
 				62DACDA720D2F69E00B7BBA7 /* GoogleService-Info.plist */,
 			);
@@ -115,6 +115,7 @@
 		62DACDA520D2DC0C00B7BBA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				62B27BFA20D82D41003D9572 /* art.scnassets */,
 				62DACD9220D2C9FC00B7BBA7 /* Assets.xcassets */,
 				62DACD9420D2C9FC00B7BBA7 /* LaunchScreen.storyboard */,
 				62DACDA620D2F51C00B7BBA7 /* GoogleService-Info.plist */,
@@ -192,6 +193,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EAE55E820D9CAD700702DD3 /* art.scnassets in Resources */,
 				62DACD9620D2C9FC00B7BBA7 /* LaunchScreen.storyboard in Resources */,
 				62DACDA820D2F72C00B7BBA7 /* GoogleService-Info.plist in Resources */,
 				62DACD9320D2C9FC00B7BBA7 /* Assets.xcassets in Resources */,
@@ -393,6 +395,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9572K9GQRB;
 				INFOPLIST_FILE = Irrigate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.IrrigateMsg.Irrigate;
@@ -408,6 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9572K9GQRB;
 				INFOPLIST_FILE = Irrigate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.IrrigateMsg.Irrigate;
