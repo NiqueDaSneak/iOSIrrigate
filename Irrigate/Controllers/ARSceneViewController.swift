@@ -26,10 +26,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
 //        // Create a new scene
-//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let goalScene = SCNScene(named: "art.scnassets/goal.scn")!
 //
 //        // Set the scene to the view
-//        sceneView.scene = scene
+        sceneView.scene = goalScene
     }
     
     override func viewWillAppear(_ animated: Bool) {
