@@ -33,6 +33,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         
 //         Set the scene to the view
         sceneView.scene = hoopScene
+        
+        createBall()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,30 +75,41 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
      */
     
     // Detect horizontal plane
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if anchor is ARPlaneAnchor {
-            let planeAnchor = anchor as! ARPlaneAnchor
-            
-            // Create plane for SceneKit and use planeAnchor values
-            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-            
-            // create plane node for placement in scene
-            let planeNode = SCNNode()
-            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: 0, z: planeAnchor.center.z)
-            // Rotate plane to be horizontal
-            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
-            
-            // Overlay for plane
-            let gridMaterial = SCNMaterial()
-            gridMaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
-            plane.materials = [gridMaterial]
-            
-            planeNode.geometry = plane
-            
-            node.addChildNode(planeNode)
-        }
-    }
+//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+//        if anchor is ARPlaneAnchor {
+//            let planeAnchor = anchor as! ARPlaneAnchor
+//
+//            // Create plane for SceneKit and use planeAnchor values
+//            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
+//
+//            // create plane node for placement in scene
+//            let planeNode = SCNNode()
+//            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: 0, z: planeAnchor.center.z)
+//            // Rotate plane to be horizontal
+//            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
+//
+//            // Overlay for plane
+//            let gridMaterial = SCNMaterial()
+//            gridMaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
+//            plane.materials = [gridMaterial]
+//
+//            planeNode.geometry = plane
+//
+//            node.addChildNode(planeNode)
+//        }
+//    }
     
+    func createBall(){
+        let ball = SCNSphere(radius: 0.3)
+        let soccerTexture = SCNMaterial()
+        soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
+        ball.materials = [soccerTexture]
+        let ballNode = SCNNode()
+        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
+        ballNode.geometry = ball
+        
+        sceneView.scene.rootNode.addChildNode(ballNode)
+    }
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
         
