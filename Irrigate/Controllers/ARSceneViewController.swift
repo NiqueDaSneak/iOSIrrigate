@@ -19,17 +19,20 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
+        sceneView.autoenablesDefaultLighting = true
+        sceneView.automaticallyUpdatesLighting = true
+        
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-//        // Create a new scene
-        let goalScene = SCNScene(named: "art.scnassets/goal.scn")!
-//
-//        // Set the scene to the view
-        sceneView.scene = goalScene
+        // Create a new scene
+        let hoopScene = SCNScene(named: "art.scnassets/hoop.scn")!
+        
+//         Set the scene to the view
+        sceneView.scene = hoopScene
     }
     
     override func viewWillAppear(_ animated: Bool) {
