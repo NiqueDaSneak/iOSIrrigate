@@ -9,10 +9,13 @@
 import UIKit
 import SceneKit
 import ARKit
-
+import Each
 class ARSceneViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    
+    var power:Float = 1
+    let timer = Each(0.05).seconds
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +33,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a new scene
         let hoopScene = SCNScene(named: "art.scnassets/hoop.scn")!
+        let hoopNode = hoopScene.rootNode.childNodes
+        for node in hoopNode {
+            node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
+        }
         
 //         Set the scene to the view
         sceneView.scene = hoopScene
         
-        createBall()
+//        createBall()
+//        let tapGesturerecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+//        self.sceneView.addGestureRecognizer(tapGesturerecognizer)
+//        tapGesturerecognizer.cancelsTouchesInView = false
         
     }
     
@@ -43,11 +53,57 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        
         configuration.planeDetection = .horizontal
-        
         // Run the view's session
         sceneView.session.run(configuration)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        timer.perform(closure: { () -> NextStep in
+            self.power = self.power + 1
+            return .continue
+        })
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.timer.stop()
+            self.shootball()
+        self.power = 1
+    }
+    
+    func addVectors(first:SCNVector3,second:SCNVector3) -> SCNVector3{
+        return SCNVector3Make(first.x + second.x, first.y + second.y, first.z + second.z)
+    }
+    
+    func shootball(){
+        guard let pointOfView = self.sceneView.pointOfView else {return}
+//        self.removeBalls()
+        // self.power = 10
+        let transform = pointOfView.transform
+        let location = SCNVector3(transform.m41,transform.m42,transform.m43)
+        let orientation = SCNVector3(-transform.m31,-transform.m32,-transform.m33)
+        let position = self.addVectors(first: location, second: orientation)
+        
+        let ball = SCNSphere(radius: 0.3)
+        let soccerTexture = SCNMaterial()
+        soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
+        ball.materials = [soccerTexture]
+        let ballNode = SCNNode()
+//        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
+        ballNode.geometry = ball
+        
+//        let ball = SCNNode(geometry: SCNSphere(radius: 0.25))
+//        ball.geometry?.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "ball")
+        ballNode.position = position
+        let body = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ballNode))
+        ballNode.physicsBody = body
+        ballNode.name = "Basketball"
+        // Energy lost when two objects collide
+        //if val == 1, ball returns back with same speed/energy
+        body.restitution = 0.2
+        // Provide force to the ball. Setting asImpulse=true gives acceleration to the ball body
+        ballNode.physicsBody?.applyForce(SCNVector3(orientation.x * power, orientation.y * power, orientation.z * power), asImpulse: true)
+        self.sceneView.scene.rootNode.addChildNode(ballNode)
     }
     
     
