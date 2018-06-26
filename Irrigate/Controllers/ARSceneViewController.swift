@@ -16,6 +16,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
     
     var power:Float = 1
     let timer = Each(0.05).seconds
+    // define all scn scene files and the node in file that is the asset
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        // comment out the below, going to wait until plane detection and hit test
         // Create a new scene
         let hoopScene = SCNScene(named: "art.scnassets/dummies.scn")!
         let hoopNode = hoopScene.rootNode.childNodes
