@@ -32,14 +32,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let hoopScene = SCNScene(named: "art.scnassets/hoop.scn")!
+        let hoopScene = SCNScene(named: "art.scnassets/dummies.scn")!
         let hoopNode = hoopScene.rootNode.childNodes
         for node in hoopNode {
+//            node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [:]))
             node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
+            node.position = SCNVector3(0,4,-4)
+            self.sceneView.scene.rootNode.addChildNode(node)
         }
         
+        
 //         Set the scene to the view
-        sceneView.scene = hoopScene
+//        sceneView.scene = hoopScene
         
 //        createBall()
 //        let tapGesturerecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
