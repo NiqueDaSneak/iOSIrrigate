@@ -79,7 +79,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
     
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let maskA = contact.nodeA.physicsBody?.categoryBitMask
-        let maskb = contact.nodeb.physicsBody?.categoryBitMask
+        let maskB = contact.nodeB.physicsBody?.categoryBitMask
+        
+        // handle starting game
+        if maskA = startConeCategoryBitMask | maskB = startConeCategoryBitMask {
+            
+        }
     }
 
     
