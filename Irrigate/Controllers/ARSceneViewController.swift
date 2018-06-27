@@ -13,9 +13,14 @@ import Each
 class ARSceneViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var navLabel: UILabel!
     
+    var gameStart: Bool = false
+    var gameWorldAdded: Bool = false
     var power:Float = 1
     let timer = Each(0.05).seconds
+    var startBitMask = 0b00 >> 1
+    var targetBitMask = 0b00 >> 2
     // define all scn scene files and the node in file that is the asset
     
     override func viewDidLoad() {
@@ -25,44 +30,71 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
-        
-        // Set the view's delegate
         sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        sceneView.session.run(configuration)
         
         // comment out the below, going to wait until plane detection and hit test
         // Create a new scene
-        let hoopScene = SCNScene(named: "art.scnassets/dummies.scn")!
-        let hoopNode = hoopScene.rootNode.childNodes
-        for node in hoopNode {
-//            node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [:]))
-            node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
-            node.position = SCNVector3(0,4,-4)
-            self.sceneView.scene.rootNode.addChildNode(node)
-        }
+//        let hoopScene = SCNScene(named: "art.scnassets/dummies.scn")!
+//        let hoopNode = hoopScene.rootNode.childNodes
+//        for node in hoopNode {
+//            node.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: node, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
+//            node.position = SCNVector3(0,4,-4)
+//            self.sceneView.scene.rootNode.addChildNode(node)
+//        }
         
         
 //         Set the scene to the view
 //        sceneView.scene = hoopScene
         
 //        createBall()
-//        let tapGesturerecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-//        self.sceneView.addGestureRecognizer(tapGesturerecognizer)
-//        tapGesturerecognizer.cancelsTouchesInView = false
+        let tapGesturerecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.sceneView.addGestureRecognizer(tapGesturerecognizer)
+        tapGesturerecognizer.cancelsTouchesInView = false
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        // Run the view's session
-        sceneView.session.run(configuration)
+    @objc func handleTap(sender:UITapGestureRecognizer){
+        guard let sceneView = sender.view as? ARSCNView else {return}
+        let touchLocation = sender.location(in: sceneView)
+        let hitTestResult = sceneView.hitTest(touchLocation, types: [.existingPlaneUsingExtent])
+        if !hitTestResult.isEmpty{
+//            self.addBasket(hitTestResult: hitTestResult.first!)
+            self.addGameWorld(hitTestResult: hitTestResult.first!)
+            print("the hit test was successful")
+        }
     }
+    
+    func addGameWorld(hitTestResult: ARHitTestResult){
+        if gameWorldAdded == false {
+            let gameScene = SCNScene(named: "art.scnassets/game.scn")
+            let gameNode = gameScene?.rootNode.childNode(withName: "LargeCone", recursively: false)
+            let positionOfPlane = hitTestResult.worldTransform.columns.3
+            let xCoord = positionOfPlane.x
+            let yCoord = positionOfPlane.y
+            let zCoord = positionOfPlane.z
+            gameNode?.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
+//            gameNode?.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: gameNode!, options: [SCNPhysicsShape.Option.keepAsCompound: true, SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
+            self.sceneView.scene.rootNode.addChildNode(gameNode!)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                self.gameWorldAdded = true
+            }
+        }
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        // Create a session configuration
+//        let configuration = ARWorldTrackingConfiguration()
+//        configuration.planeDetection = .horizontal
+//        // Run the view's session
+//        sceneView.session.run(configuration)
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         timer.perform(closure: { () -> NextStep in
@@ -90,7 +122,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         let orientation = SCNVector3(-transform.m31,-transform.m32,-transform.m33)
         let position = self.addVectors(first: location, second: orientation)
         
-        let ball = SCNSphere(radius: 0.3)
+        let ball = SCNSphere(radius: 0.11)
         let soccerTexture = SCNMaterial()
         soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
         ball.materials = [soccerTexture]
@@ -103,7 +135,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         ballNode.position = position
         let body = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ballNode))
         ballNode.physicsBody = body
-        ballNode.name = "Basketball"
+        ballNode.physicsBody?.categoryBitMask = startBitMask | targetBitMask
+
+        ballNode.name = "ball"
         // Energy lost when two objects collide
         //if val == 1, ball returns back with same speed/energy
         body.restitution = 0.2
@@ -136,8 +170,20 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
      }
      */
     
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard anchor is ARPlaneAnchor else {return}
+        DispatchQueue.main.async {
+            self.navLabel.text = "Touch the ground with dots"
+//            self.planeDetected.isHidden = false
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3){
+//            self.planeDetected.isHidden = true
+            self.navLabel.text = "Ground detected"
+        }
+    }
     // Detect horizontal plane
 //    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    
 //        if anchor is ARPlaneAnchor {
 //            let planeAnchor = anchor as! ARPlaneAnchor
 //
@@ -161,17 +207,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
 //        }
 //    }
     
-    func createBall(){
-        let ball = SCNSphere(radius: 0.3)
-        let soccerTexture = SCNMaterial()
-        soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
-        ball.materials = [soccerTexture]
-        let ballNode = SCNNode()
-        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
-        ballNode.geometry = ball
-        
-        sceneView.scene.rootNode.addChildNode(ballNode)
-    }
+//    func createBall(){
+//        let ball = SCNSphere(radius: 0.3)
+//        let soccerTexture = SCNMaterial()
+//        soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
+//        ball.materials = [soccerTexture]
+//        let ballNode = SCNNode()
+//        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
+//        ballNode.geometry = ball
+//
+//        sceneView.scene.rootNode.addChildNode(ballNode)
+//    }
+    
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
         
