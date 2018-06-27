@@ -19,13 +19,21 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
     var gameWorldAdded: Bool = false
     var power:Float = 1
     let timer = Each(0.05).seconds
-    var startBitMask = 0b00 >> 1
-    var targetBitMask = 0b00 >> 2
+    
+    let ballCategoryBitMask = 0b111<<1
+    let startConeCategoryBitMask = 0b111<<2
+    let targetCategoryBitMask = 0b111<<3
+    let powerUpCategoryBitMask = 0b111<<4
+    
+
+    
+    
     // define all scn scene files and the node in file that is the asset
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        sceneView.scene.physicsWorld.contactDelegate = self
+//        sceneView.scene.physicsWorld.contactDelegate = self
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
         sceneView.autoenablesDefaultLighting = true
@@ -68,6 +76,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
             print("the hit test was successful")
         }
     }
+    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        let maskA = contact.nodeA.physicsBody?.categoryBitMask
+        let maskb = contact.nodeb.physicsBody?.categoryBitMask
+    }
+
     
     func addGameWorld(hitTestResult: ARHitTestResult){
         if gameWorldAdded == false {
@@ -113,9 +127,17 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         return SCNVector3Make(first.x + second.x, first.y + second.y, first.z + second.z)
     }
     
+    func removeBalls(){
+        self.sceneView.scene.rootNode.enumerateChildNodes{ (node,_) in
+            if node.name == "ball"{
+                node.removeFromParentNode()
+            }
+        }
+    }
+    
     func shootball(){
         guard let pointOfView = self.sceneView.pointOfView else {return}
-//        self.removeBalls()
+        self.removeBalls()
         // self.power = 10
         let transform = pointOfView.transform
         let location = SCNVector3(transform.m41,transform.m42,transform.m43)
@@ -135,7 +157,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate {
         ballNode.position = position
         let body = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: ballNode))
         ballNode.physicsBody = body
-        ballNode.physicsBody?.categoryBitMask = startBitMask | targetBitMask
+        ballNode.physicsBody?.categoryBitMask = ballCategoryBitMask
+        ballNode.physicsBody?.collisionBitMask = startConeCategoryBitMask | targetCategoryBitMask | powerUpCategoryBitMask
 
         ballNode.name = "ball"
         // Energy lost when two objects collide
