@@ -81,6 +81,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     sceneView.scene.rootNode.addChildNode(node)
                 }
             }
+            // FOR NORMAL TARGETS
         } else {
             if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
                 if maskA == BitMaskCategory.targetCategory.rawValue {
@@ -88,12 +89,25 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     print("nodeB is ball: \(String(describing: contact.nodeB.name))")
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                         contact.nodeA.removeFromParentNode()
+
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                        let newTarget = createTarget(forStart: false)
+                        newTarget.position = contact.nodeA.position
+                        self.sceneView.scene.rootNode.addChildNode(newTarget)
                     }
                 } else {
                     print("nodeb is target, score increase: \(String(describing: contact.nodeB.name))")
                     print("nodea is ball: \(String(describing: contact.nodeA.name))")
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                         contact.nodeB.removeFromParentNode()
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+                        let newTarget = createTarget(forStart: false)
+                        newTarget.position = contact.nodeA.position
+                        self.sceneView.scene.rootNode.addChildNode(newTarget)
                     }
                 }
         }
