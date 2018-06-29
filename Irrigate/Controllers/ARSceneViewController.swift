@@ -27,8 +27,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     let powerUpCategory = 5
     let noCategory = 0
     
-    // define all scn scene files and the node in file that is the asset
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
@@ -64,7 +62,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 //        print("node b: \(contact.nodeB.physicsBody?.categoryBitMask)")
         let maskA = contact.nodeA.physicsBody?.categoryBitMask
         let maskB = contact.nodeB.physicsBody?.categoryBitMask
-//
+
 //        // handle starting game
         if gameStart == false {
             if (maskA == startConeCategory || maskB == startConeCategory) {
@@ -80,7 +78,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         }
     }
 
-    func addGameWorld(hitTestResult: ARHitTestResult){
+    func addGameWorld(hitTestResult: ARHitTestResult) {
         if gameWorldAdded == false {
             let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")
             let coneNode = gameScene?.rootNode.childNode(withName: "LargeCone", recursively: false)
@@ -89,7 +87,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             floor.reflectivity = 0.1
             let floorTexture = SCNMaterial()
             floorTexture.diffuse.contents = UIColor.green
-            floorTexture.transparency = 0.4
             floor.length = 1000
             floor.width = 1000
             let floorNode = SCNNode(geometry: floor)
@@ -107,7 +104,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             coneNode?.physicsBody?.collisionBitMask = ballCategory | floorCategory
             coneNode?.physicsBody?.contactTestBitMask = ballCategory
             floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
-//            gameNode?.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: gameNode!, options: [SCNPhysicsShape.Option.keepAsCompound: true, SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
             
             floorNode.physicsBody = floorPhysicsBody
             floorNode.physicsBody?.categoryBitMask = floorCategory
