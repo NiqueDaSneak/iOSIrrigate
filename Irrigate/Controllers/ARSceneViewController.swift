@@ -18,7 +18,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     var gameStart: Bool = false
     var gameWorldAdded: Bool = false
     var power:Float = 1
-    let timer = Each(0.05).seconds
+    let powerTimer = Each(0.05).seconds
     
     let floorCategory = 1
     let ballCategory = 2
@@ -122,14 +122,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        timer.perform(closure: { () -> NextStep in
+        powerTimer.perform(closure: { () -> NextStep in
             self.power = self.power + 1
             return .continue
         })
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.timer.stop()
+            self.powerTimer.stop()
             self.shootball()
         self.power = 1
     }
