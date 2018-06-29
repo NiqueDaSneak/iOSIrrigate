@@ -20,22 +20,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     var power:Float = 1
     let timer = Each(0.05).seconds
     
-    let floorCategoryBitMask = 1
-    let ballCategoryBitMask = 2
-    let startConeCategoryBitMask = 3
-    let targetCategoryBitMask = 4
-    let powerUpCategoryBitMask = 5
-    let noCategoryBitMask = 6
-    
-//    let ballCollisionMask =
-
-    
+    let floorCategory = 1
+    let ballCategory = 2
+    let startConeCategory = 3
+    let targetCategory = 4
+    let powerUpCategory = 5
+    let noCategory = 0
     
     // define all scn scene files and the node in file that is the asset
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sceneView.scene.physicsWorld.contactDelegate = self as? SCNPhysicsContactDelegate
+        sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
         
         sceneView.autoenablesDefaultLighting = true
@@ -64,20 +60,31 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     }
     
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        print("contact")
-//        let maskA = contact.nodeA.physicsBody?.categoryBitMask
-//        let maskB = contact.nodeB.physicsBody?.categoryBitMask
+//        print("node a: \(contact.nodeA.physicsBody?.categoryBitMask)")
+//        print("node b: \(contact.nodeB.physicsBody?.categoryBitMask)")
+        let maskA = contact.nodeA.physicsBody?.categoryBitMask
+        let maskB = contact.nodeB.physicsBody?.categoryBitMask
 //
 //        // handle starting game
-//        if maskA == startConeCategoryBitMask || maskB == startConeCategoryBitMask {
-//
-//        }
+        if gameStart == false {
+            if (maskA == startConeCategory || maskB == startConeCategory) {
+                if maskA == startConeCategory {
+                    print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
+                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                } else {
+                    print("nodeb is start cone, begin game: \(String(describing: contact.nodeB.name))")
+                    print("nodea is ball: \(String(describing: contact.nodeA.name))")
+                }
+                gameStart = true
+            }
+        }
     }
 
     func addGameWorld(hitTestResult: ARHitTestResult){
         if gameWorldAdded == false {
             let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")
             let coneNode = gameScene?.rootNode.childNode(withName: "LargeCone", recursively: false)
+            coneNode?.name = "startCone"
             let floor = SCNFloor()
             floor.reflectivity = 0.1
             let floorTexture = SCNMaterial()
@@ -90,21 +97,22 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             floorPhysicsBody.allowsResting = true
             let positionOfPlane = hitTestResult.worldTransform.columns.3
             let xCoord = positionOfPlane.x
-            let yCoord = positionOfPlane.x
+            let yCoord = positionOfPlane.y
             let zCoord = positionOfPlane.z
-            coneNode?.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
-//
+            coneNode?.position = SCNVector3(x: 1.5, y: yCoord, z: zCoord)
+            floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
+            floorNode.name = "floor"
             coneNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: coneNode!, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.200]))
-            coneNode?.physicsBody?.categoryBitMask = startConeCategoryBitMask
-            coneNode?.physicsBody?.collisionBitMask = ballCategoryBitMask | floorCategoryBitMask
-            coneNode?.physicsBody?.contactTestBitMask = ballCategoryBitMask
+            coneNode?.physicsBody?.categoryBitMask = startConeCategory
+            coneNode?.physicsBody?.collisionBitMask = ballCategory | floorCategory
+            coneNode?.physicsBody?.contactTestBitMask = ballCategory
             floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
 //            gameNode?.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: gameNode!, options: [SCNPhysicsShape.Option.keepAsCompound: true, SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.concavePolyhedron]))
             
             floorNode.physicsBody = floorPhysicsBody
-            floorNode.physicsBody?.categoryBitMask = floorCategoryBitMask
-            floorNode.physicsBody?.collisionBitMask = targetCategoryBitMask | ballCategoryBitMask | startConeCategoryBitMask
-            floorNode.physicsBody?.contactTestBitMask = noCategoryBitMask
+            floorNode.physicsBody?.categoryBitMask = floorCategory
+            floorNode.physicsBody?.collisionBitMask = targetCategory | ballCategory | startConeCategory
+            floorNode.physicsBody?.contactTestBitMask = noCategory
             self.sceneView.scene.rootNode.addChildNode(floorNode)
             self.sceneView.scene.rootNode.addChildNode(coneNode!)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
@@ -112,16 +120,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             }
         }
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        // Create a session configuration
-//        let configuration = ARWorldTrackingConfiguration()
-//        configuration.planeDetection = .horizontal
-//        // Run the view's session
-//        sceneView.session.run(configuration)
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         timer.perform(closure: { () -> NextStep in
@@ -162,22 +160,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
         ball.materials = [soccerTexture]
         let ballNode = SCNNode()
-//        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
-        ballNode.geometry = ball
         
-//        let ball = SCNNode(geometry: SCNSphere(radius: 0.25))
-//        ball.geometry?.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "ball")
+        ballNode.geometry = ball
+
         ballNode.position = position
         let body = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: SCNSphere(radius: 0.11)))
         // Energy lost when two objects collide
         //if val == 1, ball returns back with same speed/energy
         body.restitution = 0.5
         ballNode.physicsBody = body
-        ballNode.physicsBody?.categoryBitMask = ballCategoryBitMask
-        ballNode.physicsBody?.collisionBitMask = startConeCategoryBitMask | targetCategoryBitMask | floorCategoryBitMask
-        ballNode.physicsBody?.contactTestBitMask = startConeCategoryBitMask | targetCategoryBitMask
-        
-//        ballNode.physicsBody?.collisionBitMask = startConeCategoryBitMask | targetCategoryBitMask | powerUpCategoryBitMask
+        ballNode.physicsBody?.categoryBitMask = ballCategory
+        ballNode.physicsBody?.collisionBitMask = startConeCategory | targetCategory | floorCategory
+        ballNode.physicsBody?.contactTestBitMask = startConeCategory | targetCategory
 
         ballNode.name = "ball"
      
@@ -200,17 +194,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         // Release any cached data, images, etc that aren't in use.
     }
     
-    // MARK: - ARSCNViewDelegate
-    
-    /*
-     // Override to create and configure nodes for anchors added to the view's session.
-     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-     let node = SCNNode()
-     
-     return node
-     }
-     */
-    
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
         DispatchQueue.main.async {
@@ -222,43 +205,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             self.navLabel.text = "Ground detected"
         }
     }
-    // Detect horizontal plane
-//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-    
-//        if anchor is ARPlaneAnchor {
-//            let planeAnchor = anchor as! ARPlaneAnchor
-//
-//            // Create plane for SceneKit and use planeAnchor values
-//            let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-//
-//            // create plane node for placement in scene
-//            let planeNode = SCNNode()
-//            planeNode.position = SCNVector3(x: planeAnchor.center.x, y: 0, z: planeAnchor.center.z)
-//            // Rotate plane to be horizontal
-//            planeNode.transform = SCNMatrix4MakeRotation(-Float.pi/2, 1, 0, 0)
-//
-//            // Overlay for plane
-//            let gridMaterial = SCNMaterial()
-//            gridMaterial.diffuse.contents = UIImage(named: "art.scnassets/grid.png")
-//            plane.materials = [gridMaterial]
-//
-//            planeNode.geometry = plane
-//
-//            node.addChildNode(planeNode)
-//        }
-//    }
-    
-//    func createBall(){
-//        let ball = SCNSphere(radius: 0.3)
-//        let soccerTexture = SCNMaterial()
-//        soccerTexture.diffuse.contents = UIImage(named: "art.scnassets/ball-texture.jpg")
-//        ball.materials = [soccerTexture]
-//        let ballNode = SCNNode()
-//        ballNode.position = SCNVector3(x:0, y:0, z: 2 )
-//        ballNode.geometry = ball
-//
-//        sceneView.scene.rootNode.addChildNode(ballNode)
-//    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
