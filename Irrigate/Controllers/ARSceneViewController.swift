@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import Each
+
 class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate{
     
     @IBOutlet var sceneView: ARSCNView!
@@ -20,15 +21,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     var power:Float = 1
     let powerTimer = Each(0.05).seconds
     
-    let floorCategory = 1
-    let ballCategory = 2
-    let startConeCategory = 3
-    let targetCategory = 4
-    let powerUpCategory = 5
-    let noCategory = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+      
         sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
         self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
         
@@ -65,52 +61,61 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
 //        // handle starting game
         if gameStart == false {
-            if (maskA == startConeCategory || maskB == startConeCategory) {
-                if maskA == startConeCategory {
+            if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
+                if maskA == BitMaskCategory.startConeCategory.rawValue {
                     print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
                     print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        contact.nodeA.removeFromParentNode()
+                    }
                 } else {
                     print("nodeb is start cone, begin game: \(String(describing: contact.nodeB.name))")
                     print("nodea is ball: \(String(describing: contact.nodeA.name))")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        contact.nodeA.removeFromParentNode()
+                    }
                 }
                 gameStart = true
+                
+                for node in startGame() {
+                    sceneView.scene.rootNode.addChildNode(node)
+                }
             }
+        } else {
+            if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
+                if maskA == BitMaskCategory.targetCategory.rawValue {
+                    print("nodeA is target, score increase: \(String(describing: contact.nodeA.name))")
+                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        contact.nodeA.removeFromParentNode()
+                    }
+                } else {
+                    print("nodeb is target, score increase: \(String(describing: contact.nodeB.name))")
+                    print("nodea is ball: \(String(describing: contact.nodeA.name))")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+                        contact.nodeB.removeFromParentNode()
+                    }
+                }
+        }
         }
     }
 
     func addGameWorld(hitTestResult: ARHitTestResult) {
         if gameWorldAdded == false {
-            let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")
-            let coneNode = gameScene?.rootNode.childNode(withName: "LargeCone", recursively: false)
-            coneNode?.name = "startCone"
-            let floor = SCNFloor()
-            floor.reflectivity = 0.1
-            let floorTexture = SCNMaterial()
-            floorTexture.diffuse.contents = UIColor.green
-            floor.length = 1000
-            floor.width = 1000
-            let floorNode = SCNNode(geometry: floor)
-            let floorPhysicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: SCNBox(width: 100, height: 0.01, length: 1000, chamferRadius: 0)))
-            floorPhysicsBody.allowsResting = true
+//            let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")
+            let startConeNode = createTarget(forStart: true)
+            let floorNode = createFloor()
+            
             let positionOfPlane = hitTestResult.worldTransform.columns.3
             let xCoord = positionOfPlane.x
             let yCoord = positionOfPlane.y
             let zCoord = positionOfPlane.z
-            coneNode?.position = SCNVector3(x: 1.5, y: yCoord, z: zCoord)
-            floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
-            floorNode.name = "floor"
-            coneNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: coneNode!, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.200]))
-            coneNode?.physicsBody?.categoryBitMask = startConeCategory
-            coneNode?.physicsBody?.collisionBitMask = ballCategory | floorCategory
-            coneNode?.physicsBody?.contactTestBitMask = ballCategory
-            floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
             
-            floorNode.physicsBody = floorPhysicsBody
-            floorNode.physicsBody?.categoryBitMask = floorCategory
-            floorNode.physicsBody?.collisionBitMask = targetCategory | ballCategory | startConeCategory
-            floorNode.physicsBody?.contactTestBitMask = noCategory
+            startConeNode.position = SCNVector3(x: 0.1, y: yCoord, z: -1)
+            floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
+           
             self.sceneView.scene.rootNode.addChildNode(floorNode)
-            self.sceneView.scene.rootNode.addChildNode(coneNode!)
+            self.sceneView.scene.rootNode.addChildNode(startConeNode)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
                 self.gameWorldAdded = true
             }
@@ -165,9 +170,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         //if val == 1, ball returns back with same speed/energy
         body.restitution = 0.5
         ballNode.physicsBody = body
-        ballNode.physicsBody?.categoryBitMask = ballCategory
-        ballNode.physicsBody?.collisionBitMask = startConeCategory | targetCategory | floorCategory
-        ballNode.physicsBody?.contactTestBitMask = startConeCategory | targetCategory
+        ballNode.physicsBody?.categoryBitMask = BitMaskCategory.ballCategory.rawValue
+        ballNode.physicsBody?.collisionBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.floorCategory.rawValue
+        ballNode.physicsBody?.contactTestBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue
 
         ballNode.name = "ball"
      
