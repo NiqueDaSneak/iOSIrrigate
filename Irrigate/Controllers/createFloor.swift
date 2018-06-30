@@ -14,6 +14,7 @@ func createFloor() -> SCNNode {
     let floor = SCNFloor()
     floor.reflectivity = 0.1
     let floorTexture = SCNMaterial()
+    floorTexture.transparency = 0.1
     floorTexture.diffuse.contents = UIColor.green
     floor.length = 1000
     floor.width = 1000

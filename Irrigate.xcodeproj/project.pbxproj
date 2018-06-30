@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E9AA25920E68BFF008D3E4A /* GameClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25820E68BFF008D3E4A /* GameClass.swift */; };
-		0E9AA25B20E68E09008D3E4A /* createTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25A20E68E09008D3E4A /* createTarget.swift */; };
+		0E9AA25B20E68E09008D3E4A /* TargetsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25A20E68E09008D3E4A /* TargetsController.swift */; };
 		0E9AA25D20E698AE008D3E4A /* BitMaskCategoryEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25C20E698AE008D3E4A /* BitMaskCategoryEnum.swift */; };
 		0E9AA25F20E6A203008D3E4A /* createFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25E20E6A203008D3E4A /* createFloor.swift */; };
 		0E9AA26120E6A4B7008D3E4A /* startGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA26020E6A4B7008D3E4A /* startGame.swift */; };
@@ -29,7 +29,7 @@
 /* Begin PBXFileReference section */
 		0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.debug.xcconfig"; sourceTree = "<group>"; };
 		0E9AA25820E68BFF008D3E4A /* GameClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClass.swift; sourceTree = "<group>"; };
-		0E9AA25A20E68E09008D3E4A /* createTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createTarget.swift; sourceTree = "<group>"; };
+		0E9AA25A20E68E09008D3E4A /* TargetsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetsController.swift; sourceTree = "<group>"; };
 		0E9AA25C20E698AE008D3E4A /* BitMaskCategoryEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitMaskCategoryEnum.swift; sourceTree = "<group>"; };
 		0E9AA25E20E6A203008D3E4A /* createFloor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFloor.swift; sourceTree = "<group>"; };
 		0E9AA26020E6A4B7008D3E4A /* startGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = startGame.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 				62DACDA120D2CB0500B7BBA7 /* OverviewViewController.swift */,
 				62DACD9F20D2CAC000B7BBA7 /* SignUpViewController.swift */,
 				62DACD9D20D2CA9800B7BBA7 /* LogInViewController.swift */,
-				0E9AA25A20E68E09008D3E4A /* createTarget.swift */,
+				0E9AA25A20E68E09008D3E4A /* TargetsController.swift */,
 				0E9AA25C20E698AE008D3E4A /* BitMaskCategoryEnum.swift */,
 				0E9AA25E20E6A203008D3E4A /* createFloor.swift */,
 				0E9AA26020E6A4B7008D3E4A /* startGame.swift */,
@@ -269,7 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */,
-				0E9AA25B20E68E09008D3E4A /* createTarget.swift in Sources */,
+				0E9AA25B20E68E09008D3E4A /* TargetsController.swift in Sources */,
 				0E9AA25920E68BFF008D3E4A /* GameClass.swift in Sources */,
 				62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */,
 				0E9AA25F20E6A203008D3E4A /* createFloor.swift in Sources */,

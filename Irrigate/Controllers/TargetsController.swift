@@ -10,11 +10,11 @@ import UIKit
 import ARKit
 import SceneKit
 
-class Target {
-    
-
+class TargetsController: ARSceneViewController {
     
 }
+
+
 
 func createTarget(forStart:Bool) -> SCNNode {
     let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")

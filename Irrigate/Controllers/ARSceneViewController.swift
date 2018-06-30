@@ -77,40 +77,46 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 }
                 gameStart = true
                 
-                for node in startGame() {
-                    sceneView.scene.rootNode.addChildNode(node)
-                }
+                let goalNode = startGame()
+                sceneView.scene.rootNode.addChildNode(startGame())
+                
             }
             // FOR NORMAL TARGETS
         } else {
-            if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
-                if maskA == BitMaskCategory.targetCategory.rawValue {
-                    print("nodeA is target, score increase: \(String(describing: contact.nodeA.name))")
-                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        contact.nodeA.removeFromParentNode()
-
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                        let newTarget = createTarget(forStart: false)
-                        newTarget.position = contact.nodeA.position
-                        self.sceneView.scene.rootNode.addChildNode(newTarget)
-                    }
-                } else {
-                    print("nodeb is target, score increase: \(String(describing: contact.nodeB.name))")
-                    print("nodea is ball: \(String(describing: contact.nodeA.name))")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        contact.nodeB.removeFromParentNode()
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-                        let newTarget = createTarget(forStart: false)
-                        newTarget.position = contact.nodeA.position
-                        self.sceneView.scene.rootNode.addChildNode(newTarget)
-                    }
-                }
-        }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+//                for liveNode in self.sceneView.scene.rootNode.childNodes {
+//                if liveNode.name == contact.nodeA.name || liveNode.name == contact.nodeB.name {
+//
+//                    if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
+//                        if maskA == BitMaskCategory.targetCategory.rawValue {
+//                            print("nodeA is target, score increase: \(String(describing: contact.nodeA.name))")
+//                            print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+//
+//                                contact.nodeA.removeFromParentNode()
+//
+//
+//
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+//                                let newTarget = createTarget(forStart: false)
+//                                newTarget.position = contact.nodeA.position
+//                                self.sceneView.scene.rootNode.addChildNode(newTarget)
+//                            }
+//                        }
+//                        } else {
+//                            print("nodeb is target, score increase: \(String(describing: contact.nodeB.name))")
+//                            print("nodea is ball: \(String(describing: contact.nodeA.name))")
+//
+//                                contact.nodeB.removeFromParentNode()
+//
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+//                                let newTarget = createTarget(forStart: false)
+//                                newTarget.position = contact.nodeA.position
+//                                self.sceneView.scene.rootNode.addChildNode(newTarget)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 
