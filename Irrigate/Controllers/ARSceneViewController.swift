@@ -131,7 +131,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             let yCoord = positionOfPlane.y
             let zCoord = positionOfPlane.z
             
-            startConeNode.position = SCNVector3(x: 0.1, y: yCoord, z: -1)
+            startConeNode.position = SCNVector3(x: 0.1, y: yCoord, z: -5)
             floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
            
             self.sceneView.scene.rootNode.addChildNode(floorNode)
@@ -170,6 +170,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     func shootball(){
         guard let pointOfView = self.sceneView.pointOfView else {return}
         self.removeBalls()
+        if self.power > 15 {
+            self.power = 15
+        }
         // self.power = 10
         let transform = pointOfView.transform
         let location = SCNVector3(transform.m41,transform.m42,transform.m43)
@@ -191,8 +194,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         body.restitution = 0.5
         ballNode.physicsBody = body
         ballNode.physicsBody?.categoryBitMask = BitMaskCategory.ballCategory.rawValue
-        ballNode.physicsBody?.collisionBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.floorCategory.rawValue
-        ballNode.physicsBody?.contactTestBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue
+        ballNode.physicsBody?.collisionBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.floorCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue
+        ballNode.physicsBody?.contactTestBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue
 
         ballNode.name = "ball"
      
