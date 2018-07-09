@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HA1-o6-Psn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HA1-o6-Psn">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -583,30 +583,39 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </arscnView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-rS-b6V">
-                                <rect key="frame" x="0.0" y="20" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="81"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19q-w7-MV5">
-                                        <rect key="frame" x="139" y="20" width="173" height="21"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zo5-SF-Qtq">
+                                        <rect key="frame" x="14" y="25" width="34" height="30"/>
+                                        <state key="normal" title="Back"/>
+                                        <connections>
+                                            <segue destination="pik-QT-vzQ" kind="showDetail" id="frO-IF-9y5"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label that has multiple lines" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19q-w7-MV5">
+                                        <rect key="frame" x="99" y="15" width="213" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zo5-SF-Qtq">
-                                        <rect key="frame" x="14" y="15" width="34" height="30"/>
-                                        <state key="normal" title="Back"/>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label that has multiple lines" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HCz-jw-kma">
+                                        <rect key="frame" x="99" y="44" width="213" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="zo5-SF-Qtq" firstAttribute="leading" secondItem="dfc-rS-b6V" secondAttribute="leading" constant="14" id="3n7-hh-Y6C"/>
-                                    <constraint firstAttribute="width" secondItem="dfc-rS-b6V" secondAttribute="height" multiplier="16:3" id="8vj-1R-AiY"/>
-                                    <constraint firstItem="zo5-SF-Qtq" firstAttribute="top" secondItem="dfc-rS-b6V" secondAttribute="top" constant="15" id="CkS-25-slq"/>
-                                    <constraint firstAttribute="bottom" secondItem="zo5-SF-Qtq" secondAttribute="bottom" constant="15" id="J05-O2-bQl"/>
-                                    <constraint firstItem="19q-w7-MV5" firstAttribute="top" secondItem="dfc-rS-b6V" secondAttribute="top" constant="20" id="XaX-pm-xe4"/>
-                                    <constraint firstAttribute="trailing" secondItem="zo5-SF-Qtq" secondAttribute="trailing" constant="272" id="Yig-98-lue"/>
-                                    <constraint firstAttribute="trailing" secondItem="19q-w7-MV5" secondAttribute="trailing" constant="8" id="inV-RC-ff4"/>
-                                    <constraint firstAttribute="bottom" secondItem="19q-w7-MV5" secondAttribute="bottom" constant="19" id="rBa-1p-aJ4"/>
-                                    <constraint firstItem="19q-w7-MV5" firstAttribute="leading" secondItem="dfc-rS-b6V" secondAttribute="leading" constant="139" id="zn6-ka-x5O"/>
+                                    <constraint firstItem="19q-w7-MV5" firstAttribute="top" secondItem="dfc-rS-b6V" secondAttribute="top" constant="15" id="1N3-zm-lsC"/>
+                                    <constraint firstAttribute="bottom" secondItem="zo5-SF-Qtq" secondAttribute="bottom" constant="26" id="2tN-li-0kJ"/>
+                                    <constraint firstItem="zo5-SF-Qtq" firstAttribute="leading" secondItem="dfc-rS-b6V" secondAttribute="leading" constant="14" id="7it-Jp-xjU"/>
+                                    <constraint firstItem="zo5-SF-Qtq" firstAttribute="top" secondItem="dfc-rS-b6V" secondAttribute="top" constant="25" id="CfP-Ad-EFP"/>
+                                    <constraint firstAttribute="trailing" secondItem="HCz-jw-kma" secondAttribute="trailing" constant="8" id="GPG-12-cp4"/>
+                                    <constraint firstItem="HCz-jw-kma" firstAttribute="top" secondItem="19q-w7-MV5" secondAttribute="bottom" constant="8" id="XLr-hq-Ik3"/>
+                                    <constraint firstAttribute="trailing" secondItem="19q-w7-MV5" secondAttribute="trailing" constant="8" id="bk8-bp-YGo"/>
+                                    <constraint firstAttribute="bottom" secondItem="HCz-jw-kma" secondAttribute="bottom" constant="16" id="hel-5a-k6a"/>
+                                    <constraint firstAttribute="width" secondItem="dfc-rS-b6V" secondAttribute="height" multiplier="320:81" id="k6Z-T7-6KI"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -614,16 +623,17 @@
                         <constraints>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="top" secondItem="Uj5-cp-5am" secondAttribute="top" id="15M-HT-zZt"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="3Ui-aE-klV"/>
+                            <constraint firstItem="dfc-rS-b6V" firstAttribute="top" secondItem="Wlp-kI-Bto" secondAttribute="top" id="EmR-md-VnZ"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="NtC-Wg-qwN"/>
-                            <constraint firstItem="dfc-rS-b6V" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="NtL-HK-hmW"/>
-                            <constraint firstItem="dfc-rS-b6V" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="c3Y-5k-too"/>
-                            <constraint firstItem="dfc-rS-b6V" firstAttribute="top" secondItem="Wlp-kI-Bto" secondAttribute="top" id="cuu-ey-wwR"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="bottom" secondItem="Wlp-kI-Bto" secondAttribute="bottom" id="sYX-HZ-Vko"/>
+                            <constraint firstItem="dfc-rS-b6V" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="vOe-0v-Olx"/>
+                            <constraint firstItem="dfc-rS-b6V" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="xre-Hu-1Te"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Wlp-kI-Bto"/>
                     </view>
                     <connections>
-                        <outlet property="navLabel" destination="19q-w7-MV5" id="aSi-BG-Qz9"/>
+                        <outlet property="navLabelBottom" destination="HCz-jw-kma" id="JUa-5L-i6y"/>
+                        <outlet property="navLabelTop" destination="19q-w7-MV5" id="y4S-vD-8PB"/>
                         <outlet property="sceneView" destination="5Si-po-aeD" id="BNM-ok-kTi"/>
                     </connections>
                 </viewController>
@@ -738,7 +748,7 @@
         <image name="whyimg" width="339" height="417"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qOk-2k-hDL"/>
+        <segue reference="frO-IF-9y5"/>
         <segue reference="o4q-iM-udM"/>
     </inferredMetricsTieBreakers>
 </document>

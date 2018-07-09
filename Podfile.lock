@@ -29,11 +29,13 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SwiftyTimer (2.0.0)
 
 DEPENDENCIES:
   - Each
   - Firebase/Auth
   - Firebase/Core
+  - SwiftyTimer
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -46,6 +48,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GTMSessionFetcher
     - nanopb
+    - SwiftyTimer
 
 SPEC CHECKSUMS:
   Each: 53d089bc231f4a7221ed201bf23ac343c5c4d560
@@ -57,7 +60,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SwiftyTimer: 2efd74b060d69ad4f1496baf5bbedbe132125fcf
 
-PODFILE CHECKSUM: c5f770c6cf0bc4e490c2970a66b7585bce62bf5c
+PODFILE CHECKSUM: 68c5d27a349f2c8b378396e1f5f231d738323fcd
 
 COCOAPODS: 1.5.3

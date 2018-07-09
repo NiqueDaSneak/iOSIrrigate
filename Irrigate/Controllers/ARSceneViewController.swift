@@ -1,3 +1,4 @@
+
 //
 //  ARSceneViewController.swift
 //  For Irrigate
@@ -10,23 +11,34 @@ import UIKit
 import SceneKit
 import ARKit
 import Each
+//import SwiftyTimer
 
-class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate{
+class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
-    @IBOutlet weak var navLabel: UILabel!
+    @IBOutlet weak var navLabelTop: UILabel!
+    @IBOutlet weak var navLabelBottom: UILabel!
     
     var gameStart: Bool = false
     var gameWorldAdded: Bool = false
     var power:Float = 1
     let powerTimer = Each(0.05).seconds
+    let newGame = Game()
+    var gameTimer = Each(1.00).seconds
+    let scoreTimer = Each(0.01).seconds
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        gameTimer.perform(closure: { () -> NextStep in
+            self.newGame.countUp()
+            return .continue
+        })
+
         
-      
         sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
-        self.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
+//        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
         
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
@@ -41,6 +53,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         self.sceneView.addGestureRecognizer(tapGesturerecognizer)
         tapGesturerecognizer.cancelsTouchesInView = false
         
+        navLabelTop.text = "Point camera at ground"
+        navLabelBottom.text = "to detect playing field"
+        
     }
     
     @objc func handleTap(sender:UITapGestureRecognizer){
@@ -54,76 +69,59 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     }
     
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-//        print("node a: \(contact.nodeA.physicsBody?.categoryBitMask)")
-//        print("node b: \(contact.nodeB.physicsBody?.categoryBitMask)")
+
         let maskA = contact.nodeA.physicsBody?.categoryBitMask
         let maskB = contact.nodeB.physicsBody?.categoryBitMask
 
 //        // handle starting game
         if gameStart == false {
             if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
+                gameStart = true
+                
+                self.newGame.start(scene: sceneView)
+
+                DispatchQueue.main.async {
+                    self.addGameStartHeaders()
+                }
                 if maskA == BitMaskCategory.startConeCategory.rawValue {
                     print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
                     print("nodeB is ball: \(String(describing: contact.nodeB.name))")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        contact.nodeA.removeFromParentNode()
-                    }
+                    contact.nodeA.removeFromParentNode()
                 } else {
-                    print("nodeb is start cone, begin game: \(String(describing: contact.nodeB.name))")
-                    print("nodea is ball: \(String(describing: contact.nodeA.name))")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-                        contact.nodeA.removeFromParentNode()
-                    }
+                    print("nodeB is start cone, begin game: \(String(describing: contact.nodeB.name))")
+                    print("nodeA is ball: \(String(describing: contact.nodeA.name))")
+                    contact.nodeB.removeFromParentNode()
                 }
-                gameStart = true
+            }
+        } else {
+            if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
+                if maskA == BitMaskCategory.targetCategory.rawValue {
+                    print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")
+                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                    contact.nodeA.removeFromParentNode()
+                } else {
+                    print("nodeB is a target, track score: \(String(describing: contact.nodeB.name))")
+                    print("nodeA is ball: \(String(describing: contact.nodeA.name))")
+                    contact.nodeB.removeFromParentNode()
+                }
+                newGame.createTarget(scene: sceneView)
+                self.scoreTimer.stop()
                 
-                let goalNode = startGame()
-                sceneView.scene.rootNode.addChildNode(startGame())
+                
+                
+                // use ui updating function with added params for score
+                DispatchQueue.main.async {
+                    self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
+                }
+                self.newGame.recordHit()
                 
             }
-            // FOR NORMAL TARGETS
-        } else {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-//                for liveNode in self.sceneView.scene.rootNode.childNodes {
-//                if liveNode.name == contact.nodeA.name || liveNode.name == contact.nodeB.name {
-//
-//                    if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
-//                        if maskA == BitMaskCategory.targetCategory.rawValue {
-//                            print("nodeA is target, score increase: \(String(describing: contact.nodeA.name))")
-//                            print("nodeB is ball: \(String(describing: contact.nodeB.name))")
-//
-//                                contact.nodeA.removeFromParentNode()
-//
-//
-//
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-//                                let newTarget = createTarget(forStart: false)
-//                                newTarget.position = contact.nodeA.position
-//                                self.sceneView.scene.rootNode.addChildNode(newTarget)
-//                            }
-//                        }
-//                        } else {
-//                            print("nodeb is target, score increase: \(String(describing: contact.nodeB.name))")
-//                            print("nodea is ball: \(String(describing: contact.nodeA.name))")
-//
-//                                contact.nodeB.removeFromParentNode()
-//
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-//                                let newTarget = createTarget(forStart: false)
-//                                newTarget.position = contact.nodeA.position
-//                                self.sceneView.scene.rootNode.addChildNode(newTarget)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
         }
     }
 
     func addGameWorld(hitTestResult: ARHitTestResult) {
         if gameWorldAdded == false {
-//            let gameScene = SCNScene(named: "art.scnassets/largeCone.scn")
-            let startConeNode = createTarget(forStart: true)
+
             let floorNode = createFloor()
             
             let positionOfPlane = hitTestResult.worldTransform.columns.3
@@ -131,11 +129,26 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             let yCoord = positionOfPlane.y
             let zCoord = positionOfPlane.z
             
-            startConeNode.position = SCNVector3(x: 0.1, y: yCoord, z: -5)
             floorNode.position = SCNVector3(x: xCoord, y: yCoord, z: zCoord)
            
             self.sceneView.scene.rootNode.addChildNode(floorNode)
-            self.sceneView.scene.rootNode.addChildNode(startConeNode)
+            let goalNode = placeGoal()
+            goalNode.position = SCNVector3(x: 0.0, y: yCoord, z: -3.5)
+
+            sceneView.scene.rootNode.addChildNode(goalNode)
+            
+            let startCone = makeTarget()
+            startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
+            startCone.name = "startCone"
+            startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+                
+            startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
+            startCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+            startCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+            sceneView.scene.rootNode.addChildNode(startCone)
+            
+            navLabelTop.text = "Hit first target"
+            navLabelBottom.text = "to start game"
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
                 self.gameWorldAdded = true
             }
@@ -165,6 +178,11 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 node.removeFromParentNode()
             }
         }
+    }
+    
+    func addGameStartHeaders() {
+        navLabelTop.text = "Score: 0"
+        navLabelBottom.text = "Shot Value: 0"
     }
     
     func shootball(){
@@ -203,6 +221,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         // Provide force to the ball. Setting asImpulse=true gives acceleration to the ball body
         ballNode.physicsBody?.applyForce(SCNVector3(orientation.x * power, orientation.y * power, orientation.z * power), asImpulse: true)
         self.sceneView.scene.rootNode.addChildNode(ballNode)
+        
+        self.newGame.shotValue = 0
+        scoreTimer.perform(closure: { () -> NextStep in
+            self.newGame.trackShotValue()
+            return .continue
+        })
     }
     
     
@@ -221,13 +245,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
         DispatchQueue.main.async {
-            self.navLabel.text = "Touch the ground with dots"
+            self.navLabelTop.text = "Touch the ground"
+            self.navLabelBottom.text = "to place goal"
 //            self.planeDetected.isHidden = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3){
 //            self.planeDetected.isHidden = true
-            self.navLabel.text = "Ground detected"
+//            self.navLabelTop.text = "Ground detected"
         }
+    }
+
+    func updateScore() {
+        navLabelTop.text = "Score: \(newGame.score)"
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {

@@ -9,5 +9,6 @@ target 'Irrigate' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Each'
+  pod 'SwiftyTimer'
 
 end

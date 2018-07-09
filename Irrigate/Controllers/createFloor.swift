@@ -22,10 +22,7 @@ func createFloor() -> SCNNode {
     let floorPhysicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: SCNBox(width: 100, height: 0.01, length: 1000, chamferRadius: 0)))
     floorPhysicsBody.allowsResting = true
     
-
     floorNode.name = "floor"
-    
-
     
     floorNode.physicsBody = floorPhysicsBody
     floorNode.physicsBody?.categoryBitMask = BitMaskCategory.floorCategory.rawValue
