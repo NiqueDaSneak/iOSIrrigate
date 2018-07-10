@@ -32,7 +32,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     override func viewDidLoad() {
         super.viewDidLoad()
         gameTimer.perform(closure: { () -> NextStep in
-            self.newGame.countUp()
+            self.newGame.countUp(gameStart: self.gameStart)
             return .continue
         })
 
@@ -97,7 +97,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     self.navLabelTop.text = "Score: 0"
                 }
             }
-        } else {
+        }
+        
+        if contact.nodeA.name == "target" || contact.nodeB.name == "target" {
             if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
                 if maskA == BitMaskCategory.targetCategory.rawValue {
                     print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")

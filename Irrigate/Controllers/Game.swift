@@ -21,10 +21,10 @@ class Game {
     var shotValue:Int = 0
     var arScene:ARSCNView?
 
-    func countUp() {
+    func countUp(gameStart:Bool) {
         howMuchTime += 1
 //        print("count up called: \(howMuchTime)")
-        if howMuchTime == 60 {
+        if howMuchTime == 5 && gameStart == true {
             self.end()
         }
     }
@@ -57,14 +57,14 @@ class Game {
     
     func createTarget(scene: ARSCNView) {
         let target = makeTarget()
-        target.position = generateTargetCoordinates(sceneNode: arScene)
+        target.position = generateTargetCoordinates(sceneNode: arScene!)
         target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         target.name = "target"
         target.physicsBody?.categoryBitMask = BitMaskCategory.targetCategory.rawValue
         target.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
         target.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
         
-        arScene.scene.rootNode.addChildNode(target)
+        arScene?.scene.rootNode.addChildNode(target)
     }
     
     func trackShotValue() {
@@ -80,8 +80,15 @@ class Game {
     func end() {
         let childNodes = arScene?.scene.rootNode.childNodes
         
-        for node in childNodes {
+        for node in childNodes! {
+            if node.name == "target" {
+                node.name = "disabled"
+                node.geometry?.firstMaterial?.diffuse.contents = UIColor.darkGray
+                node.physicsBody?.collisionBitMask = BitMaskCategory.ballCategory.rawValue
+                node.physicsBody?.contactTestBitMask = BitMaskCategory.noCategory.rawValue
+            }
             // change the nodes so that the collision detection and such are no longer functional
+            
             // perhaps just remove them
         }
         
