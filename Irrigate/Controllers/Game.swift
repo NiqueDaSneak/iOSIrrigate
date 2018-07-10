@@ -15,11 +15,11 @@ import ARKit
 
 class Game {
     
-    
     var howMuchTime:Int = 0
     var score:Int = 0
     var onFire:Bool = false
     var shotValue:Int = 0
+    var arScene:ARSCNView?
 
     func countUp() {
         howMuchTime += 1
@@ -47,6 +47,7 @@ class Game {
     }
     
     func start(scene: ARSCNView) {
+        arScene = scene
         
         self.startTimeOver()
         print("Start func called")
@@ -55,17 +56,15 @@ class Game {
     }
     
     func createTarget(scene: ARSCNView) {
-        let sceneView = scene
-        
         let target = makeTarget()
-        target.position = generateTargetCoordinates(sceneNode: sceneView)
+        target.position = generateTargetCoordinates(sceneNode: arScene)
         target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         target.name = "target"
         target.physicsBody?.categoryBitMask = BitMaskCategory.targetCategory.rawValue
         target.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
         target.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
         
-        sceneView.scene.rootNode.addChildNode(target)
+        arScene.scene.rootNode.addChildNode(target)
     }
     
     func trackShotValue() {
@@ -79,6 +78,14 @@ class Game {
     }
         
     func end() {
+        let childNodes = arScene?.scene.rootNode.childNodes
+        
+        for node in childNodes {
+            // change the nodes so that the collision detection and such are no longer functional
+            // perhaps just remove them
+        }
+        
+        // loadGameOverview(finalScore: score, username: session.username???)
         print("End game")
     }
     

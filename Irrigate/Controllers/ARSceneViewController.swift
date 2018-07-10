@@ -92,6 +92,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     print("nodeA is ball: \(String(describing: contact.nodeA.name))")
                     contact.nodeB.removeFromParentNode()
                 }
+                DispatchQueue.main.async {
+                    self.navLabelBottom.text = "Shot Value: 0"
+                    self.navLabelTop.text = "Score: 0"
+                }
             }
         } else {
             if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
@@ -104,17 +108,17 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     print("nodeA is ball: \(String(describing: contact.nodeA.name))")
                     contact.nodeB.removeFromParentNode()
                 }
+                
                 newGame.createTarget(scene: sceneView)
                 self.scoreTimer.stop()
                 
-                
+                self.newGame.recordHit()
                 
                 // use ui updating function with added params for score
                 DispatchQueue.main.async {
                     self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
+                    self.navLabelTop.text = "Score: \(self.newGame.score)"
                 }
-                self.newGame.recordHit()
-                
             }
         }
     }
