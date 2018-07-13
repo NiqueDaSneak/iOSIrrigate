@@ -8,7 +8,8 @@ target 'Irrigate' do
   # Pods for Irrigate
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
   pod 'Each'
-  pod 'SwiftyTimer'
+  pod 'PKHUD'
 
 end

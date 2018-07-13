@@ -30,24 +30,14 @@ class SignUpViewController: UIViewController {
         let email = signUpEmail.text
         let pass = signUpPassword.text
         
-        Auth.auth().createUser(withEmail: email!, password: pass!) { (user, error) in
+        Auth.auth().createUser(withEmail: email!, password: pass!) { (result, error) in
             if (error != nil) {
                 print(error!)
             } else {
                 self.performSegue(withIdentifier: "showOverview", sender: self)
-//                print(user!.user)
+               
+                UserDefaults.standard.set(result?.user.email, forKey: "sessionEmail")
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

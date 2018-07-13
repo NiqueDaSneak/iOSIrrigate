@@ -30,11 +30,13 @@ class LogInViewController: UIViewController {
         let email = logInEmail.text
         let pass = logInPass.text
         
-        Auth.auth().signIn(withEmail: email!, password: pass!) { (user, error) in
+        Auth.auth().signIn(withEmail: email!, password: pass!) { (result, error) in
             if (error != nil) {
                 print(error!)
             } else {
                 self.performSegue(withIdentifier: "showOverview", sender: self)
+                
+                UserDefaults.standard.set(result?.user.email, forKey: "sessionEmail")
             }
         }
     }

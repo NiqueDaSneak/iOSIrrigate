@@ -74,52 +74,54 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         let maskB = contact.nodeB.physicsBody?.categoryBitMask
 
 //        // handle starting game
-        if gameStart == false {
-            if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
-                gameStart = true
-                
-                self.newGame.start(scene: sceneView)
-
-                DispatchQueue.main.async {
-                    self.addGameStartHeaders()
-                }
-                if maskA == BitMaskCategory.startConeCategory.rawValue {
-                    print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
-                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
-                    contact.nodeA.removeFromParentNode()
-                } else {
-                    print("nodeB is start cone, begin game: \(String(describing: contact.nodeB.name))")
-                    print("nodeA is ball: \(String(describing: contact.nodeA.name))")
-                    contact.nodeB.removeFromParentNode()
-                }
-                DispatchQueue.main.async {
-                    self.navLabelBottom.text = "Shot Value: 0"
-                    self.navLabelTop.text = "Score: 0"
+        if contact.nodeA.parent != nil || contact.nodeB.parent != nil {
+            if gameStart == false {
+                if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
+                    gameStart = true
+                    
+                    self.newGame.start(scene: sceneView)
+                    
+                    DispatchQueue.main.async {
+                        self.addGameStartHeaders()
+                    }
+                    if maskA == BitMaskCategory.startConeCategory.rawValue {
+                        print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
+                        print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                        contact.nodeA.removeFromParentNode()
+                    } else {
+                        print("nodeB is start cone, begin game: \(String(describing: contact.nodeB.name))")
+                        print("nodeA is ball: \(String(describing: contact.nodeA.name))")
+                        contact.nodeB.removeFromParentNode()
+                    }
+                    DispatchQueue.main.async {
+                        self.navLabelBottom.text = "Shot Value: 0"
+                        self.navLabelTop.text = "Score: 0"
+                    }
                 }
             }
-        }
-        
-        if contact.nodeA.name == "target" || contact.nodeB.name == "target" {
-            if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
-                if maskA == BitMaskCategory.targetCategory.rawValue {
-                    print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")
-                    print("nodeB is ball: \(String(describing: contact.nodeB.name))")
-                    contact.nodeA.removeFromParentNode()
-                } else {
-                    print("nodeB is a target, track score: \(String(describing: contact.nodeB.name))")
-                    print("nodeA is ball: \(String(describing: contact.nodeA.name))")
-                    contact.nodeB.removeFromParentNode()
-                }
-                
-                newGame.createTarget(scene: sceneView)
-                self.scoreTimer.stop()
-                
-                self.newGame.recordHit()
-                
-                // use ui updating function with added params for score
-                DispatchQueue.main.async {
-                    self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
-                    self.navLabelTop.text = "Score: \(self.newGame.score)"
+            
+            if contact.nodeA.name == "target" || contact.nodeB.name == "target" {
+                if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
+                    if maskA == BitMaskCategory.targetCategory.rawValue {
+                        print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")
+                        print("nodeB is ball: \(String(describing: contact.nodeB.name))")
+                        contact.nodeA.removeFromParentNode()
+                    } else {
+                        print("nodeB is a target, track score: \(String(describing: contact.nodeB.name))")
+                        print("nodeA is ball: \(String(describing: contact.nodeA.name))")
+                        contact.nodeB.removeFromParentNode()
+                    }
+                    
+                    newGame.createTarget(scene: sceneView)
+                    self.scoreTimer.stop()
+                    
+                    self.newGame.recordHit()
+                    
+                    // use ui updating function with added params for score
+                    DispatchQueue.main.async {
+                        self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
+                        self.navLabelTop.text = "Score: \(self.newGame.score)"
+                    }
                 }
             }
         }

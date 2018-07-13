@@ -7,13 +7,81 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
+import PKHUD
 
 class OverviewViewController: UIViewController {
+    var db: DatabaseReference!
+
+    var sessionUsername:String?
+    let sessionEmail = UserDefaults.standard.string(forKey: "sessionEmail")
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(false)
+        db = Database.database().reference()
 
-        // Do any additional setup after loading the view.
+        if sessionUsername != nil {
+            print("USERNAME: \(String(describing: sessionUsername))")
+        } else {
+            let usersRef = db.child("users")
+            let query = usersRef.child((Auth.auth().currentUser?.uid)!)
+            
+            query.observe(.value, with: { snapshot in
+
+                if snapshot.value is NSNull {
+                    
+                    let alert = UIAlertController(title: "Need Username", message: "We need you to create a username. Input below.", preferredStyle: .alert)
+                    alert.addTextField { (textField) in
+                        textField.placeholder = "Username goes here"
+                    }
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("Submit", comment: "Create Username"), style: .default, handler: { _ in
+                        UserDefaults.standard.set(alert.textFields?.first?.text, forKey: "sessionUsername")
+                        self.sessionUsername = alert.textFields?.first?.text
+                        let user = ["email": self.sessionEmail, "username": self.sessionUsername]
+                        self.db.child("users").child((Auth.auth().currentUser?.uid)!).setValue(user)
+                        print("sessionUsername \(String(describing: self.sessionUsername))")
+                        HUD.flash(.success, delay: 1.0)
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                } else {
+                    for child in snapshot.children {
+                        let snap = child as! DataSnapshot
+                        
+                        if snap.value != nil {
+                            if snap.key == "username" {
+                                if snap.value != nil {
+                                    self.sessionUsername = snap.value as? String
+                                    print("sessionUsername \(String(describing: self.sessionUsername))")
+                                } else {
+                                    
+                                    let alert = UIAlertController(title: "Need Username", message: "We need you to create a username. Input below.", preferredStyle: .alert)
+                                    alert.addTextField { (textField) in
+                                        textField.placeholder = "Username goes here"
+                                    }
+                                    alert.addAction(UIAlertAction(title: NSLocalizedString("Submit", comment: "Create Username"), style: .default, handler: { _ in
+                                        UserDefaults.standard.set(alert.textFields?.first?.text, forKey: "sessionUsername")
+                                        self.sessionUsername = alert.textFields?.first?.text
+                                        let user = ["email": self.sessionEmail, "username": self.sessionUsername]
+                                        self.db.child("users").child((Auth.auth().currentUser?.uid)!).setValue(user)
+                                        print("sessionUsername \(String(describing: self.sessionUsername))")
+                                        HUD.flash(.success, delay: 1.0)
+                                    }))
+                                    self.present(alert, animated: true, completion: nil)
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,115 +89,17 @@ class OverviewViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func logOut(_ sender: UIButton) {
+        do {
+        try Auth.auth().signOut()
+        } catch {
+            print("error logging out: \(error)")
+        }
+        UserDefaults.standard.set(nil, forKey: "sessionUsername")
+        UserDefaults.standard.set(nil, forKey: "sessionEmail")
+        self.performSegue(withIdentifier: "logOut", sender: self)
     }
-    */
-
+    
 }
-
-//@IBDesignable
-//class DesignableView: UIView {
-//}
-//
-//@IBDesignable
-//class DesignableButton: UIButton {
-//}
-//
-//@IBDesignable
-//class DesignableLabel: UILabel {
-//}
-//
-//extension UIView {
-//    
-//    @IBInspectable
-//    var cornerRadius: CGFloat {
-//        get {
-//            return layer.cornerRadius
-//        }
-//        set {
-//            layer.cornerRadius = newValue
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var borderWidth: CGFloat {
-//        get {
-//            return layer.borderWidth
-//        }
-//        set {
-//            layer.borderWidth = newValue
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var borderColor: UIColor? {
-//        get {
-//            if let color = layer.borderColor {
-//                return UIColor(cgColor: color)
-//            }
-//            return nil
-//        }
-//        set {
-//            if let color = newValue {
-//                layer.borderColor = color.cgColor
-//            } else {
-//                layer.borderColor = nil
-//            }
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var shadowRadius: CGFloat {
-//        get {
-//            return layer.shadowRadius
-//        }
-//        set {
-//            layer.shadowRadius = newValue
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var shadowOpacity: Float {
-//        get {
-//            return layer.shadowOpacity
-//        }
-//        set {
-//            layer.shadowOpacity = newValue
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var shadowOffset: CGSize {
-//        get {
-//            return layer.shadowOffset
-//        }
-//        set {
-//            layer.shadowOffset = newValue
-//        }
-//    }
-//    
-//    @IBInspectable
-//    var shadowColor: UIColor? {
-//        get {
-//            if let color = layer.shadowColor {
-//                return UIColor(cgColor: color)
-//            }
-//            return nil
-//        }
-//        set {
-//            if let color = newValue {
-//                layer.shadowColor = color.cgColor
-//            } else {
-//                layer.shadowColor = nil
-//            }
-//        }
-//    }
-//}
 
 
