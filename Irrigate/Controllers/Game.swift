@@ -13,13 +13,17 @@ import ARKit
 //import SwiftyTimer
 //import Each
 
-class Game {
+class Game: UIViewController {
     
     var howMuchTime:Int = 0
     var score:Int = 0
     var onFire:Bool = false
     var shotValue:Int = 0
     var arScene:ARSCNView?
+    var arControllerRef:ARSceneViewController = ARSceneViewController()
+    var toolbar = ARSceneViewController.
+    
+//    var bottomToolbar = ARSceneViewController.navLabelBottom
 
     func countUp(gameStart:Bool) {
         howMuchTime += 1
