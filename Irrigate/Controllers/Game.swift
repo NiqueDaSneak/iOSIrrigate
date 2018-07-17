@@ -9,21 +9,18 @@
 import UIKit
 import SceneKit
 import ARKit
+import Each
 
 //import SwiftyTimer
 //import Each
 
-class Game: UIViewController {
+class Game {
     
     var howMuchTime:Int = 0
     var score:Int = 0
     var onFire:Bool = false
     var shotValue:Int = 0
     var arScene:ARSCNView?
-    var arControllerRef:ARSceneViewController = ARSceneViewController()
-    var toolbar = ARSceneViewController.
-    
-//    var bottomToolbar = ARSceneViewController.navLabelBottom
 
     func countUp(gameStart:Bool) {
         howMuchTime += 1
@@ -82,6 +79,10 @@ class Game: UIViewController {
     }
         
     func end() {
+        
+//        ARSceneViewController().showBottomToolbar()
+        ARSceneViewController().updateBottomToolbar(score: score)
+        
         let childNodes = arScene?.scene.rootNode.childNodes
         
         for node in childNodes! {

@@ -18,6 +18,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var navLabelTop: UILabel!
     @IBOutlet weak var navLabelBottom: UILabel!
+    @IBOutlet weak var toolbarBottom: UIToolbar!
+    @IBOutlet weak var toolBarLabel: UIBarButtonItem!
     
     var gameStart: Bool = false
     var gameWorldAdded: Bool = false
@@ -38,7 +40,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
         
         sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
-//        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
         
         sceneView.autoenablesDefaultLighting = true
         sceneView.automaticallyUpdatesLighting = true
@@ -58,8 +60,26 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         
     }
     
-    func returnToolbar(){
-        return 
+    @IBAction func exitGameScreen(_ sender: UIBarButtonItem) {
+    }
+    
+    @IBAction func showLeaderboard(_ sender: UIBarButtonItem) {
+    }
+    
+    @IBAction func restartGame(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Reposition Goal?", message: "You can take this chance to place the goal in a better place", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Replace Goal", comment: ""), style: .default, handler: { _ in
+            // delete all nodes
+            // start back at plane detection
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Leave It", comment: ""), style: .default, handler: { _ in
+            // remove alert
+            // delete all target nodes
+            // place start target node
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     @objc func handleTap(sender:UITapGestureRecognizer){
@@ -197,6 +217,15 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         navLabelBottom.text = "Shot Value: 0"
     }
     
+//    func showBottomToolbar(){
+//        self.toolbarBottom.isHidden = false
+//    }
+    
+    func updateBottomToolbar(score:Int){
+        
+        print("score: \(score)")
+    }
+    
     func shootball(){
         guard let pointOfView = self.sceneView.pointOfView else {return}
         self.removeBalls()
@@ -269,6 +298,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
     func updateScore() {
         navLabelTop.text = "Score: \(newGame.score)"
+        toolBarLabel.title = "Score: \(newGame.score)"
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {

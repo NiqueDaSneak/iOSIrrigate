@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HA1-o6-Psn">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -622,13 +622,44 @@
                                     <constraint firstAttribute="width" secondItem="dfc-rS-b6V" secondAttribute="height" multiplier="320:81" id="k6Z-T7-6KI"/>
                                 </constraints>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="37O-Bn-fan">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="37O-Bn-fan" secondAttribute="height" multiplier="80:11" id="HhW-AC-jq3"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Best: 0 (132nd)" id="leq-lS-qzl" userLabel="Label"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="N2C-Da-QvR"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="eJQ-nI-Wiu"/>
+                                    <barButtonItem title="exit" image="exit" id="Wxy-89-K3g">
+                                        <connections>
+                                            <action selector="exitGameScreen:" destination="HA1-o6-Psn" id="7ci-B1-WPm"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="Unb-fX-ngj"/>
+                                    <barButtonItem title="leaderboard" image="scores" id="y6T-Ob-YUt">
+                                        <connections>
+                                            <action selector="showLeaderboard:" destination="HA1-o6-Psn" id="7yc-BT-TXK"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="FHv-H4-4sc"/>
+                                    <barButtonItem title="retry" image="retry" id="fSV-8f-xvh">
+                                        <connections>
+                                            <action selector="restartGame:" destination="HA1-o6-Psn" id="lm2-bx-bIn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="top" secondItem="Uj5-cp-5am" secondAttribute="top" id="15M-HT-zZt"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="3Ui-aE-klV"/>
+                            <constraint firstItem="37O-Bn-fan" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="60C-2u-67N"/>
                             <constraint firstItem="dfc-rS-b6V" firstAttribute="top" secondItem="Wlp-kI-Bto" secondAttribute="top" id="EmR-md-VnZ"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="NtC-Wg-qwN"/>
+                            <constraint firstItem="37O-Bn-fan" firstAttribute="bottom" secondItem="Wlp-kI-Bto" secondAttribute="bottom" id="eCt-E6-Mjr"/>
+                            <constraint firstItem="37O-Bn-fan" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="edV-YI-vnQ"/>
                             <constraint firstItem="5Si-po-aeD" firstAttribute="bottom" secondItem="Wlp-kI-Bto" secondAttribute="bottom" id="sYX-HZ-Vko"/>
                             <constraint firstItem="dfc-rS-b6V" firstAttribute="trailing" secondItem="Wlp-kI-Bto" secondAttribute="trailing" id="vOe-0v-Olx"/>
                             <constraint firstItem="dfc-rS-b6V" firstAttribute="leading" secondItem="Wlp-kI-Bto" secondAttribute="leading" id="xre-Hu-1Te"/>
@@ -639,6 +670,8 @@
                         <outlet property="navLabelBottom" destination="HCz-jw-kma" id="JUa-5L-i6y"/>
                         <outlet property="navLabelTop" destination="19q-w7-MV5" id="y4S-vD-8PB"/>
                         <outlet property="sceneView" destination="5Si-po-aeD" id="BNM-ok-kTi"/>
+                        <outlet property="toolBarLabel" destination="leq-lS-qzl" id="F97-cH-ncC"/>
+                        <outlet property="toolbarBottom" destination="37O-Bn-fan" id="AKY-6a-nLz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ta-X2-22i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -742,6 +775,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="exit" width="39" height="31"/>
         <image name="howImg" width="339" height="373"/>
         <image name="icon-truecolor" width="33" height="36"/>
         <image name="icon-white" width="80" height="87"/>
@@ -749,6 +783,8 @@
         <image name="logo" width="128" height="138"/>
         <image name="map" width="339" height="417"/>
         <image name="maps" width="43" height="43"/>
+        <image name="retry" width="26" height="30"/>
+        <image name="scores" width="30" height="30"/>
         <image name="whyimg" width="339" height="417"/>
     </resources>
     <inferredMetricsTieBreakers>
