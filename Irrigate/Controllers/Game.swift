@@ -80,7 +80,8 @@ class Game {
         
     func end() {
         
-//        ARSceneViewController().showBottomToolbar()
+        trackScore(score: score, user: UserDefaults.standard.string(forKey: "sessionUsername")! )
+        
         ARSceneViewController().updateBottomToolbar(score: score)
         
         let childNodes = arScene?.scene.rootNode.childNodes

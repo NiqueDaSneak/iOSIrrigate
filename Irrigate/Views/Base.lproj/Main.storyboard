@@ -634,6 +634,7 @@
                                     <barButtonItem title="exit" image="exit" id="Wxy-89-K3g">
                                         <connections>
                                             <action selector="exitGameScreen:" destination="HA1-o6-Psn" id="7ci-B1-WPm"/>
+                                            <segue destination="pik-QT-vzQ" kind="show" id="9A7-HV-GeF"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="Unb-fX-ngj"/>

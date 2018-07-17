@@ -61,6 +61,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     }
     
     @IBAction func exitGameScreen(_ sender: UIBarButtonItem) {
+        
     }
     
     @IBAction func showLeaderboard(_ sender: UIBarButtonItem) {
@@ -74,12 +75,24 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             // start back at plane detection
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Leave It", comment: ""), style: .default, handler: { _ in
+            self.removeTarget()
+            self.placeStartCone()
+            self.gameStart = false
+            self.newGame.score = 0
             // remove alert
             // delete all target nodes
             // place start target node
         }))
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    func removeTarget() {
+        for node in self.sceneView.scene.rootNode.childNodes {
+            if node.name == "disabled" {
+                node.removeFromParentNode()
+            }
+        }
     }
     
     @objc func handleTap(sender:UITapGestureRecognizer){
@@ -169,15 +182,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
             sceneView.scene.rootNode.addChildNode(goalNode)
             
-            let startCone = makeTarget()
-            startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
-            startCone.name = "startCone"
-            startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
-                
-            startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
-            startCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
-            startCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
-            sceneView.scene.rootNode.addChildNode(startCone)
+            self.placeStartCone()
             
             navLabelTop.text = "Hit first target"
             navLabelBottom.text = "to start game"
@@ -185,6 +190,18 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 self.gameWorldAdded = true
             }
         }
+    }
+    
+    func placeStartCone() {
+        let startCone = makeTarget()
+        startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
+        startCone.name = "startCone"
+        startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        
+        startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
+        startCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        startCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        sceneView.scene.rootNode.addChildNode(startCone)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
