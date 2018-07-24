@@ -11,6 +11,8 @@ import UIKit
 import SceneKit
 import ARKit
 import Each
+import PKHUD
+
 //import SwiftyTimer
 
 class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
@@ -38,7 +40,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             return .continue
         })
 
-        
+        // WHY BREAK HERE????
         sceneView.scene.physicsWorld.contactDelegate = self as SCNPhysicsContactDelegate
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, .showPhysicsShapes]
         
@@ -239,7 +241,15 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 //    }
     
     func updateBottomToolbar(score:Int){
+        let alert = UIAlertController(title: "Reposition Goal?", message: "You can take this chance to place the goal in a better place", preferredStyle: .alert)
         
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Replace Goal", comment: ""), style: .default, handler: { _ in
+
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Leave It", comment: ""), style: .default, handler: { _ in
+
+        }))
+        ARSceneViewController().present(alert, animated: true, completion: nil)
         print("score: \(score)")
     }
     

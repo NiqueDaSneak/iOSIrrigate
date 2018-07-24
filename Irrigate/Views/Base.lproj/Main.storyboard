@@ -628,7 +628,7 @@
                                     <constraint firstAttribute="width" secondItem="37O-Bn-fan" secondAttribute="height" multiplier="80:11" id="HhW-AC-jq3"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="Best: 0 (132nd)" id="leq-lS-qzl" userLabel="Label"/>
+                                    <barButtonItem tag="1" title="H" id="leq-lS-qzl" userLabel="Label"/>
                                     <barButtonItem systemItem="flexibleSpace" id="N2C-Da-QvR"/>
                                     <barButtonItem systemItem="flexibleSpace" id="eJQ-nI-Wiu"/>
                                     <barButtonItem title="exit" image="exit" id="Wxy-89-K3g">
@@ -671,7 +671,7 @@
                         <outlet property="navLabelBottom" destination="HCz-jw-kma" id="JUa-5L-i6y"/>
                         <outlet property="navLabelTop" destination="19q-w7-MV5" id="y4S-vD-8PB"/>
                         <outlet property="sceneView" destination="5Si-po-aeD" id="BNM-ok-kTi"/>
-                        <outlet property="toolBarLabel" destination="leq-lS-qzl" id="F97-cH-ncC"/>
+                        <outlet property="toolBarLabel" destination="leq-lS-qzl" id="N8Y-Oz-wpw"/>
                         <outlet property="toolbarBottom" destination="37O-Bn-fan" id="AKY-6a-nLz"/>
                     </connections>
                 </viewController>

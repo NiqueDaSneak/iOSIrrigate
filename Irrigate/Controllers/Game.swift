@@ -10,9 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import Each
-
-//import SwiftyTimer
-//import Each
+import PKHUD
 
 class Game {
     
@@ -25,7 +23,7 @@ class Game {
     func countUp(gameStart:Bool) {
         howMuchTime += 1
 //        print("count up called: \(howMuchTime)")
-        if howMuchTime == 45 && gameStart == true {
+        if howMuchTime == 5 && gameStart == true {
             self.end()
         }
     }
@@ -80,9 +78,13 @@ class Game {
         
     func end() {
         
-        trackScore(score: score, user: UserDefaults.standard.string(forKey: "sessionUsername")! )
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            HUD.flash(.label("Saving Score"), delay: 1.5)
+            trackScore(score: self.score, user: UserDefaults.standard.string(forKey: "sessionUsername")! )
+            ARSceneViewController().updateBottomToolbar(score: self.score)
+        }
         
-        ARSceneViewController().updateBottomToolbar(score: score)
+        
         
         let childNodes = arScene?.scene.rootNode.childNodes
         
