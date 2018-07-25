@@ -74,7 +74,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         let maskB = contact.nodeB.physicsBody?.categoryBitMask
 
 //        // handle starting game
-        if contact.nodeA.parent != nil || contact.nodeB.parent != nil {
+        if contact.nodeA.parent != nil && contact.nodeB.parent != nil {
             if gameStart == false {
                 if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
                     gameStart = true
