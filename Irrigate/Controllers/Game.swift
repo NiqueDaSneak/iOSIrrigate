@@ -20,11 +20,12 @@ class Game {
     var onFire:Bool = false
     var shotValue:Int = 0
     var arScene:ARSCNView?
+    var finalScore:Int?
 
     func countUp(gameStart:Bool) {
         howMuchTime += 1
 //        print("count up called: \(howMuchTime)")
-        if howMuchTime == 45 && gameStart == true {
+        if howMuchTime == 60 && gameStart == true {
             self.end()
         }
     }
@@ -78,6 +79,10 @@ class Game {
     }
         
     func end() {
+//        PopOverViewController().gameScore = score
+//        print("PopOverViewController().gameScore: \(PopOverViewController().gameScore)")
+//        print("Real Score: \(score)")
+//        PopOverViewController().setScore(score: score)
         let childNodes = arScene?.scene.rootNode.childNodes
         
         for node in childNodes! {
@@ -94,6 +99,11 @@ class Game {
         
         // loadGameOverview(finalScore: score, username: session.username???)
         print("End game")
+        
+        UserDefaults.standard.set(score, forKey: "currentScore")
+        if UserDefaults.standard.integer(forKey: "highScore") < UserDefaults.standard.integer(forKey: "currentScore") {
+             UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "currentScore"), forKey: "highScore")
+        }
     }
     
 

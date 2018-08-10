@@ -13,11 +13,12 @@ import ARKit
 import Each
 //import SwiftyTimer
 
-class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
+class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var navLabelTop: UILabel!
     @IBOutlet weak var navLabelBottom: UILabel!
+    @IBOutlet weak var navMenuButton: UIButton!
     
     var gameStart: Bool = false
     var gameWorldAdded: Bool = false
@@ -26,6 +27,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     let newGame = Game()
     var gameTimer = Each(1.00).seconds
     let scoreTimer = Each(0.01).seconds
+    var navController:UINavigationController?
     
     
 
@@ -56,6 +58,38 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         navLabelTop.text = "Point camera at ground"
         navLabelBottom.text = "to detect playing field"
         
+    }
+    
+    
+    @IBAction func menuButtonTapped(_ sender: UIButton) {
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "popOverController") as! PopOverViewController
+        vc.preferredContentSize = CGSize(width: 400, height: 500)
+        navController = UINavigationController(rootViewController: vc)
+        navController?.modalPresentationStyle = UIModalPresentationStyle.popover
+        
+        let popOver = navController?.popoverPresentationController
+        popOver?.delegate = self
+        navController?.popoverPresentationController?.sourceView = sender
+        
+        self.present(navController!, animated: true, completion: nil)
+    }
+    
+    func endGameShowPopover() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "popOverController") as! PopOverViewController
+        vc.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
+        navController = UINavigationController(rootViewController: vc)
+        navController?.modalPresentationStyle = UIModalPresentationStyle.popover
+        
+        let popOver = navController?.popoverPresentationController
+        popOver?.delegate = self
+        navController?.popoverPresentationController?.sourceView = navMenuButton
+        
+        self.present(navController!, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     @objc func handleTap(sender:UITapGestureRecognizer){
