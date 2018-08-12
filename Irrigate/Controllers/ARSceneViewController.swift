@@ -178,16 +178,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             goalNode.position = SCNVector3(x: 0.0, y: yCoord, z: -3.5)
 
             sceneView.scene.rootNode.addChildNode(goalNode)
-            
-            let startCone = makeTarget()
-            startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
-            startCone.name = "startCone"
-            startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
-                
-            startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
-            startCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
-            startCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
-            sceneView.scene.rootNode.addChildNode(startCone)
+
+            sceneView.scene.rootNode.addChildNode(makeStartGameCone())
+            sceneView.scene.rootNode.addChildNode(makeStartTrainingCone())
+            sceneView.scene.rootNode.addChildNode(makeQuitCone())
             
             navLabelTop.text = "Hit first target"
             navLabelBottom.text = "to start game"
@@ -195,6 +189,42 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 self.gameWorldAdded = true
             }
         }
+    }
+    
+    func makeQuitCone() -> SCNNode {
+        let quitCone = makeTarget()
+        quitCone.position = SCNVector3(x: 1.0, y: 0, z: -2.5)
+        quitCone.name = "quitCone"
+        quitCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: quitCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        
+        quitCone.physicsBody?.categoryBitMask = BitMaskCategory.quitCategory.rawValue
+        quitCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        quitCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        return quitCone
+    }
+    
+    func makeStartTrainingCone() -> SCNNode {
+        let trainingCone = makeTarget()
+        trainingCone.position = SCNVector3(x: -1.0, y: 0, z: -2.5)
+        trainingCone.name = "trainingCone"
+        trainingCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: trainingCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        
+        trainingCone.physicsBody?.categoryBitMask = BitMaskCategory.startTrainingCategory.rawValue
+        trainingCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        trainingCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        return trainingCone
+    }
+    
+    func makeStartGameCone() -> SCNNode {
+        let startCone = makeTarget()
+        startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
+        startCone.name = "startCone"
+        startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        
+        startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
+        startCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        startCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        return startCone
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
