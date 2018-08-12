@@ -20,11 +20,13 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     @IBOutlet weak var navLabelBottom: UILabel!
     @IBOutlet weak var navMenuButton: UIButton!
     
-    var gameStart: Bool = false
+    var gameStart:Bool = false
+    var isTraining:Bool = false
     var gameWorldAdded: Bool = false
     var power:Float = 1
     let powerTimer = Each(0.05).seconds
     let newGame = Game()
+    let trainer = Trainer()
     var gameTimer = Each(1.00).seconds
     let scoreTimer = Each(0.01).seconds
     var navController:UINavigationController?
@@ -148,19 +150,31 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                         contact.nodeB.removeFromParentNode()
                     }
                     
-                    newGame.createTarget(scene: sceneView)
                     self.scoreTimer.stop()
                     
-                    self.newGame.recordHit()
-                    
-                    // use ui updating function with added params for score
-                    DispatchQueue.main.async {
-                        self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
-                        self.navLabelTop.text = "Score: \(self.newGame.score)"
+                    if self.isTraining == true {
+                        self.trainer.createTarget(scene: sceneView)
+                        self.trainer.recordHit()
+                        // use ui updating function with added params for score
+                        DispatchQueue.main.async {
+                            self.navLabelBottom.text = "Shot Value: \(self.trainer.shotValue)"
+                            self.navLabelTop.text = "Score: \(self.trainer.score)"
+                        }
+                    } else {
+                        newGame.createTarget(scene: sceneView)
+                        self.newGame.recordHit()
+                        // use ui updating function with added params for score
+                        DispatchQueue.main.async {
+                            self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
+                            self.navLabelTop.text = "Score: \(self.newGame.score)"
+                        }
                     }
                 }
-//                FOR STARTING TRAINING
+                
+//                FOR TRAINING
                 if (maskA == BitMaskCategory.startTrainingCategory.rawValue || maskB == BitMaskCategory.startTrainingCategory.rawValue) {
+                    self.scoreTimer.stop()
+
                     if maskA == BitMaskCategory.startTrainingCategory.rawValue {
                         print("nodeA is the training cone: \(contact.nodeA.name)")
                         print("nodeB is the ball: \(contact.nodeB.name)")
@@ -171,14 +185,16 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                         print("nodeB is the training cone: \(contact.nodeB.name)")
                         contact.nodeB.removeFromParentNode()
                     }
+                    
                     self.sceneView.scene.rootNode.enumerateChildNodes{ (node,_) in
                         if node.name == "target" || node.name == "startCone" {
                             node.removeFromParentNode()
                         }
                     }
+                    self.isTraining = true
+                    self.trainer.start(scene: sceneView)
                     print("start training")
                 }
-
             }
         }
     }
@@ -321,8 +337,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         
         self.newGame.shotValue = 0
         scoreTimer.perform(closure: { () -> NextStep in
-            self.newGame.trackShotValue()
-            return .continue
+            if self.isTraining == true {
+                self.trainer.trackShotValue()
+                return .continue
+            } else {
+                self.newGame.trackShotValue()
+                return .continue
+            }
+            
         })
     }
     

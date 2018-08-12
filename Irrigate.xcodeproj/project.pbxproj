@@ -16,6 +16,7 @@
 		0E9AA25F20E6A203008D3E4A /* createFloor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25E20E6A203008D3E4A /* createFloor.swift */; };
 		0E9AA26120E6A4B7008D3E4A /* placeGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA26020E6A4B7008D3E4A /* placeGoal.swift */; };
 		0EAE55E820D9CAD700702DD3 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 62B27BFA20D82D41003D9572 /* art.scnassets */; };
+		0ED2C59D2120F56000C3714E /* Trainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED2C59C2120F56000C3714E /* Trainer.swift */; };
 		62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B27BF820D827D8003D9572 /* ARSceneViewController.swift */; };
 		62DACD8C20D2C9FC00B7BBA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8B20D2C9FC00B7BBA7 /* AppDelegate.swift */; };
 		62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DACD8D20D2C9FC00B7BBA7 /* HomeScreenViewController.swift */; };
@@ -39,6 +40,7 @@
 		0E9AA25C20E698AE008D3E4A /* BitMaskCategoryEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitMaskCategoryEnum.swift; sourceTree = "<group>"; };
 		0E9AA25E20E6A203008D3E4A /* createFloor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createFloor.swift; sourceTree = "<group>"; };
 		0E9AA26020E6A4B7008D3E4A /* placeGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeGoal.swift; sourceTree = "<group>"; };
+		0ED2C59C2120F56000C3714E /* Trainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trainer.swift; sourceTree = "<group>"; };
 		1A008BECC71A2D3639EEE609 /* Pods-Irrigate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.release.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.release.xcconfig"; sourceTree = "<group>"; };
 		4EB0985B0F933497751F198D /* Pods_Irrigate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Irrigate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62B27BF820D827D8003D9572 /* ARSceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				0E348A8A20EFBEF6007A9F5F /* Game.swift */,
 				0E348A8C20F24BF3007A9F5F /* Timer.swift */,
 				0E8FD3D82110B44D001D90E7 /* PopOverViewController.swift */,
+				0ED2C59C2120F56000C3714E /* Trainer.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */,
 				0E9AA25F20E6A203008D3E4A /* createFloor.swift in Sources */,
 				62DACD8C20D2C9FC00B7BBA7 /* AppDelegate.swift in Sources */,
+				0ED2C59D2120F56000C3714E /* Trainer.swift in Sources */,
 				62DACDA220D2CB0500B7BBA7 /* OverviewViewController.swift in Sources */,
 				62DACDA020D2CAC000B7BBA7 /* SignUpViewController.swift in Sources */,
 				0E9AA25D20E698AE008D3E4A /* BitMaskCategoryEnum.swift in Sources */,
