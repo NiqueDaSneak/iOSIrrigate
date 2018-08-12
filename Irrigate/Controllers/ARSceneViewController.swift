@@ -110,6 +110,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 //        // handle starting game
         if contact.nodeA.parent != nil && contact.nodeB.parent != nil {
             if gameStart == false {
+//              FOR STARTING GAME TARGET
                 if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
                     gameStart = true
                     
@@ -135,6 +136,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             }
             
             if contact.nodeA.name == "target" || contact.nodeB.name == "target" {
+//              FOR NORMAL TARGETS
                 if (maskA == BitMaskCategory.targetCategory.rawValue || maskB == BitMaskCategory.targetCategory.rawValue) {
                     if maskA == BitMaskCategory.targetCategory.rawValue {
                         print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")
@@ -157,6 +159,26 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                         self.navLabelTop.text = "Score: \(self.newGame.score)"
                     }
                 }
+//                FOR STARTING TRAINING
+                if (maskA == BitMaskCategory.startTrainingCategory.rawValue || maskB == BitMaskCategory.startTrainingCategory.rawValue) {
+                    if maskA == BitMaskCategory.startTrainingCategory.rawValue {
+                        print("nodeA is the training cone: \(contact.nodeA.name)")
+                        print("nodeB is the ball: \(contact.nodeB.name)")
+                        contact.nodeA.removeFromParentNode()
+                        
+                    } else {
+                        print("nodeA is the ball: \(contact.nodeA.name)")
+                        print("nodeB is the training cone: \(contact.nodeB.name)")
+                        contact.nodeB.removeFromParentNode()
+                    }
+                    self.sceneView.scene.rootNode.enumerateChildNodes{ (node,_) in
+                        if node.name == "target" || node.name == "startCone" {
+                            node.removeFromParentNode()
+                        }
+                    }
+                    print("start training")
+                }
+
             }
         }
     }
@@ -194,7 +216,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     func makeQuitCone() -> SCNNode {
         let quitCone = makeTarget()
         quitCone.position = SCNVector3(x: 1.0, y: 0, z: -2.5)
-        quitCone.name = "quitCone"
+        quitCone.name = "target"
         quitCone.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         quitCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: quitCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         
@@ -207,7 +229,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     func makeStartTrainingCone() -> SCNNode {
         let trainingCone = makeTarget()
         trainingCone.position = SCNVector3(x: -1.0, y: 0, z: -2.5)
-        trainingCone.name = "trainingCone"
+        trainingCone.name = "target"
         
         trainingCone.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
         trainingCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: trainingCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
