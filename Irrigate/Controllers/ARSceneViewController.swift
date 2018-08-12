@@ -195,6 +195,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         let quitCone = makeTarget()
         quitCone.position = SCNVector3(x: 1.0, y: 0, z: -2.5)
         quitCone.name = "quitCone"
+        quitCone.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         quitCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: quitCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         
         quitCone.physicsBody?.categoryBitMask = BitMaskCategory.quitCategory.rawValue
@@ -207,8 +208,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         let trainingCone = makeTarget()
         trainingCone.position = SCNVector3(x: -1.0, y: 0, z: -2.5)
         trainingCone.name = "trainingCone"
-        trainingCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: trainingCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         
+        trainingCone.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
+        trainingCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: trainingCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         trainingCone.physicsBody?.categoryBitMask = BitMaskCategory.startTrainingCategory.rawValue
         trainingCone.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
         trainingCone.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
@@ -219,6 +221,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         let startCone = makeTarget()
         startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
         startCone.name = "startCone"
+        startCone.geometry?.firstMaterial?.diffuse.contents = UIColor.green
         startCone.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: startCone, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
         
         startCone.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
