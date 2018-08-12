@@ -64,7 +64,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     @IBAction func menuButtonTapped(_ sender: UIButton) {
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "popOverController") as! PopOverViewController
-        vc.preferredContentSize = CGSize(width: 400, height: 500)
+        vc.preferredContentSize = CGSize(width: 300, height: 500)
         navController = UINavigationController(rootViewController: vc)
         navController?.modalPresentationStyle = UIModalPresentationStyle.popover
         
