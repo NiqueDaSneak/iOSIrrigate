@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0E348A8B20EFBEF6007A9F5F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E348A8A20EFBEF6007A9F5F /* Game.swift */; };
 		0E348A8D20F24BF3007A9F5F /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E348A8C20F24BF3007A9F5F /* Timer.swift */; };
+		0E4513992123258300553D03 /* createMenuTargets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4513982123258300553D03 /* createMenuTargets.swift */; };
 		0E4ECF0520EEE892008FA3A4 /* makeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4ECF0420EEE892008FA3A4 /* makeTarget.swift */; };
 		0E8FD3D92110B44D001D90E7 /* PopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8FD3D82110B44D001D90E7 /* PopOverViewController.swift */; };
 		0E9AA25B20E68E09008D3E4A /* TargetsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9AA25A20E68E09008D3E4A /* TargetsController.swift */; };
@@ -35,6 +36,7 @@
 		0D721EFADCF741EA0235D577 /* Pods-Irrigate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Irrigate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Irrigate/Pods-Irrigate.debug.xcconfig"; sourceTree = "<group>"; };
 		0E348A8A20EFBEF6007A9F5F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		0E348A8C20F24BF3007A9F5F /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		0E4513982123258300553D03 /* createMenuTargets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createMenuTargets.swift; sourceTree = "<group>"; };
 		0E4ECF0420EEE892008FA3A4 /* makeTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeTarget.swift; sourceTree = "<group>"; };
 		0E8FD3D82110B44D001D90E7 /* PopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverViewController.swift; sourceTree = "<group>"; };
 		0E9AA25A20E68E09008D3E4A /* TargetsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetsController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				0E8FD3D82110B44D001D90E7 /* PopOverViewController.swift */,
 				0ED2C59C2120F56000C3714E /* Trainer.swift */,
 				0EFED89621230C7800D5EDC3 /* makeLargeCone.swift */,
+				0E4513982123258300553D03 /* createMenuTargets.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				62B27BF920D827D8003D9572 /* ARSceneViewController.swift in Sources */,
 				0E8FD3D92110B44D001D90E7 /* PopOverViewController.swift in Sources */,
 				0E9AA25B20E68E09008D3E4A /* TargetsController.swift in Sources */,
+				0E4513992123258300553D03 /* createMenuTargets.swift in Sources */,
 				0E4ECF0520EEE892008FA3A4 /* makeTarget.swift in Sources */,
 				0E348A8D20F24BF3007A9F5F /* Timer.swift in Sources */,
 				62DACD8E20D2C9FC00B7BBA7 /* HomeScreenViewController.swift in Sources */,
