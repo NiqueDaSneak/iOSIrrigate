@@ -13,7 +13,6 @@ import ARKit
 
 class Trainer {
     
-    var score:Int = 0
     var onFire:Bool = false
     var shotValue:Int = 0
     var arScene:ARSCNView?
@@ -33,6 +32,7 @@ class Trainer {
     }
     
     func start(scene: ARSCNView) {
+//        print("SHOULD NOT FIRE!!!")
         arScene = scene
         
         print("Start trainer func called")
@@ -40,40 +40,10 @@ class Trainer {
         createTarget()
         createTarget()
         createTarget()
-        createTarget()
         
-        createMenuTargets()
+        createMenuTargets(scene: scene)
     }
-    
-    func createMenuTargets() {
-        let greenTarget = makeLargeCone()
-        greenTarget.position = SCNVector3(0,(arScene?.scene.rootNode.position.y)!,5)
-        greenTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.135]))
-        greenTarget.name = "startCone"
-        greenTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.green
         
-        greenTarget.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
-        greenTarget.physicsBody?.collisionBitMask = BitMaskCategory.floorCategory.rawValue | BitMaskCategory.ballCategory.rawValue
-        greenTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
-        
-        arScene?.scene.rootNode.addChildNode(greenTarget)
-        
-        let redTarget = makeLargeCone()
-        redTarget.position = SCNVector3(1,(arScene?.scene.rootNode.position.y)!,5)
-        redTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.135]))
-        redTarget.name = "target"
-        redTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        
-        redTarget.physicsBody?.categoryBitMask = BitMaskCategory.quitCategory.rawValue
-        redTarget.physicsBody?.collisionBitMask = BitMaskCategory.floorCategory.rawValue | BitMaskCategory.ballCategory.rawValue
-        redTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
-        
-        arScene?.scene.rootNode.addChildNode(redTarget)
-
-
-        
-    }
-    
     func createTarget() {
         let target = makeTarget()
         target.position = generateTargetCoordinates(sceneNode: arScene!)
@@ -81,7 +51,7 @@ class Trainer {
         target.name = "target"
         target.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
 
-        target.physicsBody?.categoryBitMask = BitMaskCategory.targetCategory.rawValue
+        target.physicsBody?.categoryBitMask = BitMaskCategory.trainingTargetCategory.rawValue
         target.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
         target.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
         
@@ -91,11 +61,6 @@ class Trainer {
     func trackShotValue() {
         self.shotValue += 1
         //        print(self.shotValue)
-    }
-    
-    func recordHit() {
-        print("Target hit for \(self.shotValue) points!")
-        self.score = self.score + self.shotValue
     }
     
     func end() {
