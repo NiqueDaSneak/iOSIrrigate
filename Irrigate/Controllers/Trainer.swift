@@ -37,14 +37,44 @@ class Trainer {
         
         print("Start trainer func called")
         print("trainer adding targets to screen")
-        createTarget(scene: scene)
-        createTarget(scene: scene)
-        createTarget(scene: scene)
-        createTarget(scene: scene)
-
+        createTarget()
+        createTarget()
+        createTarget()
+        createTarget()
+        
+        createMenuTargets()
     }
     
-    func createTarget(scene: ARSCNView) {
+    func createMenuTargets() {
+        let greenTarget = makeLargeCone()
+        greenTarget.position = SCNVector3(0,(arScene?.scene.rootNode.position.y)!,5)
+        greenTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.135]))
+        greenTarget.name = "startCone"
+        greenTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.green
+        
+        greenTarget.physicsBody?.categoryBitMask = BitMaskCategory.startConeCategory.rawValue
+        greenTarget.physicsBody?.collisionBitMask = BitMaskCategory.floorCategory.rawValue | BitMaskCategory.ballCategory.rawValue
+        greenTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        
+        arScene?.scene.rootNode.addChildNode(greenTarget)
+        
+        let redTarget = makeLargeCone()
+        redTarget.position = SCNVector3(1,(arScene?.scene.rootNode.position.y)!,5)
+        redTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.135]))
+        redTarget.name = "target"
+        redTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        
+        redTarget.physicsBody?.categoryBitMask = BitMaskCategory.quitCategory.rawValue
+        redTarget.physicsBody?.collisionBitMask = BitMaskCategory.floorCategory.rawValue | BitMaskCategory.ballCategory.rawValue
+        redTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        
+        arScene?.scene.rootNode.addChildNode(redTarget)
+
+
+        
+    }
+    
+    func createTarget() {
         let target = makeTarget()
         target.position = generateTargetCoordinates(sceneNode: arScene!)
         target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
@@ -70,31 +100,6 @@ class Trainer {
     
     func end() {
         print("inside end training function")
-//        //        PopOverViewController().gameScore = score
-//        //        print("PopOverViewController().gameScore: \(PopOverViewController().gameScore)")
-//        //        print("Real Score: \(score)")
-//        //        PopOverViewController().setScore(score: score)
-//        let childNodes = arScene?.scene.rootNode.childNodes
-//        
-//        for node in childNodes! {
-//            if node.name == "target" {
-//                node.name = "disabled"
-//                node.geometry?.firstMaterial?.diffuse.contents = UIColor.darkGray
-//                node.physicsBody?.collisionBitMask = BitMaskCategory.ballCategory.rawValue
-//                node.physicsBody?.contactTestBitMask = BitMaskCategory.noCategory.rawValue
-//            }
-//            // change the nodes so that the collision detection and such are no longer functional
-//            
-//            // perhaps just remove them
-//        }
-//        
-//        // loadGameOverview(finalScore: score, username: session.username???)
-//        print("End game")
-//        
-//        UserDefaults.standard.set(score, forKey: "currentScore")
-//        if UserDefaults.standard.integer(forKey: "highScore") < UserDefaults.standard.integer(forKey: "currentScore") {
-//            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "currentScore"), forKey: "highScore")
-//        }
     }
     
     

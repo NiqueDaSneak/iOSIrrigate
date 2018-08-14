@@ -19,6 +19,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     @IBOutlet weak var navLabelTop: UILabel!
     @IBOutlet weak var navLabelBottom: UILabel!
     @IBOutlet weak var navMenuButton: UIButton!
+    @IBOutlet weak var ret: UIImageView!
     
     var gameStart:Bool = false
     var isTraining:Bool = false
@@ -35,6 +36,12 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+//        hideReticle()
+//        ret.isHidden = true
+
+        
         gameTimer.perform(closure: { () -> NextStep in
             self.newGame.countUp(gameStart: self.gameStart)
             return .continue
@@ -60,6 +67,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         navLabelTop.text = "Point camera at ground"
         navLabelBottom.text = "to detect playing field"
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
     }
     
     
@@ -115,11 +126,17 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 //              FOR STARTING GAME TARGET
                 if (maskA == BitMaskCategory.startConeCategory.rawValue || maskB == BitMaskCategory.startConeCategory.rawValue) {
                     gameStart = true
-                    
+                    self.isTraining = false
+                    self.sceneView.scene.rootNode.enumerateChildNodes{ (node,_) in
+                        if node.name == "target" || node.name == "startCone" {
+                            node.removeFromParentNode()
+                        }
+                    }
                     self.newGame.start(scene: sceneView)
                     
                     DispatchQueue.main.async {
                         self.addGameStartHeaders()
+                        self.ret.isHidden = true
                     }
                     if maskA == BitMaskCategory.startConeCategory.rawValue {
                         print("nodeA is start cone, begin game: \(String(describing: contact.nodeA.name))")
@@ -153,20 +170,20 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     self.scoreTimer.stop()
                     
                     if self.isTraining == true {
-                        self.trainer.createTarget(scene: sceneView)
+                        self.trainer.createTarget()
                         self.trainer.recordHit()
                         // use ui updating function with added params for score
                         DispatchQueue.main.async {
-                            self.navLabelBottom.text = "Shot Value: \(self.trainer.shotValue)"
-                            self.navLabelTop.text = "Score: \(self.trainer.score)"
+                            self.navLabelTop.text = "Hit orange to play"
+                            self.navLabelBottom.text = "Hit purple to train"
                         }
                     } else {
                         newGame.createTarget(scene: sceneView)
                         self.newGame.recordHit()
                         // use ui updating function with added params for score
                         DispatchQueue.main.async {
-                            self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
                             self.navLabelTop.text = "Score: \(self.newGame.score)"
+                            self.navLabelBottom.text = "Shot Value: \(self.newGame.shotValue)"
                         }
                     }
                 }
@@ -176,13 +193,13 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     self.scoreTimer.stop()
 
                     if maskA == BitMaskCategory.startTrainingCategory.rawValue {
-                        print("nodeA is the training cone: \(contact.nodeA.name)")
-                        print("nodeB is the ball: \(contact.nodeB.name)")
+//                        print("nodeA is the training cone: \(contact.nodeA.name)")
+//                        print("nodeB is the ball: \(contact.nodeB.name)")
                         contact.nodeA.removeFromParentNode()
                         
                     } else {
-                        print("nodeA is the ball: \(contact.nodeA.name)")
-                        print("nodeB is the training cone: \(contact.nodeB.name)")
+//                        print("nodeA is the ball: \(contact.nodeA.name)")
+//                        print("nodeB is the training cone: \(contact.nodeB.name)")
                         contact.nodeB.removeFromParentNode()
                     }
                     
@@ -195,6 +212,11 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     self.trainer.start(scene: sceneView)
                     print("start training")
                 }
+                
+                if (maskA == BitMaskCategory.quitCategory.rawValue || maskB == BitMaskCategory.quitCategory.rawValue) {
+                    print("QUIT GAME!!!")
+                }
+
             }
         }
     }
@@ -228,6 +250,14 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             }
         }
     }
+    
+//    func showReticle() {
+//            ret.isHidden = false
+//    }
+//    
+//    func hideReticle() {
+//            ret!.isHidden = true
+//    }
     
     func makeQuitCone() -> SCNNode {
         let quitCone = makeTarget()
@@ -325,8 +355,8 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         body.restitution = 0.5
         ballNode.physicsBody = body
         ballNode.physicsBody?.categoryBitMask = BitMaskCategory.ballCategory.rawValue
-        ballNode.physicsBody?.collisionBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.floorCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue
-        ballNode.physicsBody?.contactTestBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue
+        ballNode.physicsBody?.collisionBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.floorCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue | BitMaskCategory.quitCategory.rawValue
+        ballNode.physicsBody?.contactTestBitMask = BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.targetCategory.rawValue | BitMaskCategory.crossBarCategory.rawValue | BitMaskCategory.netCategory.rawValue | BitMaskCategory.quitCategory.rawValue
 
         ballNode.name = "ball"
      
