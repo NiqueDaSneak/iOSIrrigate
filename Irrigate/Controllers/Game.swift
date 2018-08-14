@@ -24,8 +24,8 @@ class Game {
 
     func countUp(gameStart:Bool) {
         howMuchTime += 1
-//        print("count up called: \(howMuchTime)")
-        if howMuchTime == 60 && gameStart == true {
+        print("count up called: \(howMuchTime): \(gameStart)")
+        if howMuchTime == 10 && gameStart == true {
             self.end()
         }
     }
@@ -47,10 +47,27 @@ class Game {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
     }
     
-    func start(scene: ARSCNView) {
+    func setup(scene:ARSCNView) {
+//        print("SHOULDNT BE FIRING")
         arScene = scene
+//        createTarget(scene: scene)
+        let target = makeTarget()
+        target.position = generateTargetCoordinates(sceneNode: scene)
+        target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        target.name = "startGameTarget"
+        target.physicsBody?.categoryBitMask = BitMaskCategory.targetCategory.rawValue
+        target.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        target.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
         
-        self.startTimeOver()
+        arScene?.scene.rootNode.addChildNode(target)
+
+    }
+    
+    func start(scene:ARSCNView) {
+//        arScene = scene
+        
+//        self.startTimeOver()
+        score = 0
         print("Start func called")
         print("start adding targets to screen")
         createTarget(scene: scene)
@@ -79,25 +96,22 @@ class Game {
     }
         
     func end() {
-//        PopOverViewController().gameScore = score
-//        print("PopOverViewController().gameScore: \(PopOverViewController().gameScore)")
-//        print("Real Score: \(score)")
-//        PopOverViewController().setScore(score: score)
+        
+        ARSceneViewController().gameStart = false
+        
         let childNodes = arScene?.scene.rootNode.childNodes
         
         for node in childNodes! {
             if node.name == "target" {
                 node.name = "disabled"
                 node.geometry?.firstMaterial?.diffuse.contents = UIColor.darkGray
+                node.physicsBody?.categoryBitMask = BitMaskCategory.disabledTargetCategory.rawValue
                 node.physicsBody?.collisionBitMask = BitMaskCategory.ballCategory.rawValue
                 node.physicsBody?.contactTestBitMask = BitMaskCategory.noCategory.rawValue
             }
-            // change the nodes so that the collision detection and such are no longer functional
-            
-            // perhaps just remove them
         }
         
-        // loadGameOverview(finalScore: score, username: session.username???)
+//        createMenuTargets(scene: arScene!)
         print("End game")
         
         UserDefaults.standard.set(score, forKey: "currentScore")
