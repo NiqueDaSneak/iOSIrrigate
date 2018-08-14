@@ -26,7 +26,7 @@ func createFloor() -> SCNNode {
     
     floorNode.physicsBody = floorPhysicsBody
     floorNode.physicsBody?.categoryBitMask = BitMaskCategory.floorCategory.rawValue
-    floorNode.physicsBody?.collisionBitMask = BitMaskCategory.targetCategory.rawValue | BitMaskCategory.ballCategory.rawValue | BitMaskCategory.startConeCategory.rawValue
+    floorNode.physicsBody?.collisionBitMask = BitMaskCategory.targetCategory.rawValue | BitMaskCategory.ballCategory.rawValue | BitMaskCategory.startConeCategory.rawValue | BitMaskCategory.trainingTargetCategory.rawValue
     floorNode.physicsBody?.contactTestBitMask = BitMaskCategory.noCategory.rawValue
     
     return floorNode
