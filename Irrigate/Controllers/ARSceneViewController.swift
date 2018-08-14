@@ -124,6 +124,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             if (maskA == BitMaskCategory.startTrainingCategory.rawValue || maskB == BitMaskCategory.startTrainingCategory.rawValue) {
                 if self.isTraining == false {
                     self.isTraining = true
+                    DispatchQueue.main.async {
+                        self.ret.isHidden = false
+                    }
                     self.scoreTimer.stop()
                     
                     if maskA == BitMaskCategory.startTrainingCategory.rawValue {
@@ -165,6 +168,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             if (maskA == BitMaskCategory.quitCategory.rawValue || maskB == BitMaskCategory.quitCategory.rawValue) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
                     self.performSegue(withIdentifier: "quitGame", sender: self)
+                    gameTimer.stop()
                 }
             }
             
@@ -178,7 +182,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                     }
                 }
                 createMenuTargets(scene: sceneView)
-                self.newGame.setup(scene: sceneView)
+                self.newGame.setup(scene: sceneView, sender: self)
                 
                 DispatchQueue.main.async {
                     self.ret.isHidden = true
@@ -195,7 +199,9 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 print("\(gameStart)")
                 if gameStart == false {
                     gameStart = true
-                    newGame.startTimeOver()
+                    newGame.restart(scene: sceneView)
+                } else {
+                    newGame.createTarget(scene: sceneView)
                 }
                 if maskA == BitMaskCategory.targetCategory.rawValue {
                     print("nodeA is a target, track score: \(String(describing: contact.nodeA.name))")
@@ -208,7 +214,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
                 }
                 
                 self.scoreTimer.stop()
-                newGame.createTarget(scene: sceneView)
                 newGame.recordHit()
                 // use ui updating function with added params for score
                 DispatchQueue.main.async {
@@ -238,7 +243,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
             sceneView.scene.rootNode.addChildNode(goalNode)
 
-            sceneView.scene.rootNode.addChildNode(makeStartGameCone())
+            sceneView.scene.rootNode.addChildNode(makeSetupGameCone())
             sceneView.scene.rootNode.addChildNode(makeStartTrainingCone())
             sceneView.scene.rootNode.addChildNode(makeQuitCone())
             
@@ -284,7 +289,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
         return trainingCone
     }
     
-    func makeStartGameCone() -> SCNNode {
+    func makeSetupGameCone() -> SCNNode {
         let startCone = makeTarget()
         startCone.position = SCNVector3(x: 0.0, y: 0, z: -2.5)
         startCone.name = "setUpGameCone"

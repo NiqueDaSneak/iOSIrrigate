@@ -32,11 +32,15 @@ class Trainer {
     }
     
     func start(scene: ARSCNView) {
-//        print("SHOULD NOT FIRE!!!")
+
         arScene = scene
         
-        print("Start trainer func called")
-        print("trainer adding targets to screen")
+        scene.scene.rootNode.enumerateChildNodes{ (node,_) in
+            if node.name == "disabled" {
+                node.removeFromParentNode()
+            }
+        }
+        
         createTarget()
         createTarget()
         createTarget()

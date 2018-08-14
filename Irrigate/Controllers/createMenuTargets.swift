@@ -12,6 +12,12 @@ import ARKit
 
 func createMenuTargets(scene:ARSCNView) {
     
+    scene.scene.rootNode.enumerateChildNodes{ (node,_) in
+        if node.name == "startCone" || node.name == "quitTarget" || node.name == "trainTarget" {
+            node.removeFromParentNode()
+        }
+    }
+    
     let greenTarget = makeLargeCone()
     greenTarget.position = SCNVector3(-1,0,3)
     greenTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.25]))

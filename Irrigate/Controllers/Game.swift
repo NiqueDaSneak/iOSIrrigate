@@ -47,10 +47,11 @@ class Game {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
     }
     
-    func setup(scene:ARSCNView) {
-//        print("SHOULDNT BE FIRING")
+    func setup(scene:ARSCNView, sender:ARSceneViewController) {
+        
+        sender.gameStart = false
+        
         arScene = scene
-//        createTarget(scene: scene)
         let target = makeTarget()
         target.position = generateTargetCoordinates(sceneNode: scene)
         target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
@@ -63,11 +64,16 @@ class Game {
 
     }
     
-    func start(scene:ARSCNView) {
-//        arScene = scene
+    func restart(scene:ARSCNView) {
         
-//        self.startTimeOver()
-        score = 0
+        scene.scene.rootNode.enumerateChildNodes{ (node,_) in
+            if node.name == "disabled" {
+                node.removeFromParentNode()
+            }
+        }
+        
+        self.startTimeOver()
+        self.score = 0
         print("Start func called")
         print("start adding targets to screen")
         createTarget(scene: scene)
