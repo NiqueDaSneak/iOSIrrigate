@@ -28,14 +28,22 @@ class SignUpViewController: UIViewController {
     
     @IBAction func signUpPressed(_ sender: UIButton) {
         let email = signUpEmail.text
-        let pass = signUpPassword.text
         
-        Auth.auth().createUser(withEmail: email!, password: pass!) { (result, error) in
+        
+        
+        Auth.auth().signIn(withEmail: email!, password: "password") { (result, error) in
             if (error != nil) {
-                print(error!)
+                Auth.auth().createUser(withEmail: email!, password: "password") { (result, error) in
+                    if (error != nil) {
+                        print(error!)
+                    } else {
+                        UserDefaults.standard.set(result?.user.email, forKey: "sessionEmail")
+                        self.performSegue(withIdentifier: "showOverview", sender: self)
+                    }
+                }
             } else {
                 self.performSegue(withIdentifier: "showOverview", sender: self)
-               
+                
                 UserDefaults.standard.set(result?.user.email, forKey: "sessionEmail")
             }
         }

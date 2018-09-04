@@ -168,7 +168,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
             if (maskA == BitMaskCategory.quitCategory.rawValue || maskB == BitMaskCategory.quitCategory.rawValue) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5){
                     self.performSegue(withIdentifier: "quitGame", sender: self)
-                    gameTimer.stop()
+                    self.gameTimer.stop()
                 }
             }
             
@@ -366,7 +366,6 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
         ballNode.name = "ball"
      
-       
         // Provide force to the ball. Setting asImpulse=true gives acceleration to the ball body
         ballNode.physicsBody?.applyForce(SCNVector3(orientation.x * power, orientation.y * power, orientation.z * power), asImpulse: true)
         self.sceneView.scene.rootNode.addChildNode(ballNode)
