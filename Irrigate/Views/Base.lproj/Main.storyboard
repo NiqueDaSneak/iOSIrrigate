@@ -772,11 +772,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhT-Y3-KSE">
-                                <rect key="frame" x="16" y="305" width="126" height="161.33333333333337"/>
+                                <rect key="frame" x="16" y="305" width="126" height="150.66666666666663"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="126" id="nHa-KK-Er5"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac elit id metus bibendum pharetra. Ut faucibus, dolor a eleifend lacinia, nisl ipsum tempor est, at rhoncus nisi lorem a mi. Morbi rutrum, mi sed pulvinar blandit, lorem est sollicitudin mauris, quis dignissim velit ligula volutpat diam.Ut faucibus, dolor a eleifend lacinia, nisl ipsum tempor est, at rhoncus nisi lorem a mi. </string>
+                                <string key="text">Go ahead and move around! The further from the goal you are the higher the value of hit targets. Tap and hold to power up your shots. You will have help shooting during training, but not when it counts! You will see different cones sitting on the ground. That is the menu. Use it to start training, start a game, or leave the game. Each game last 45 seconds. Good luck!</string>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="9"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

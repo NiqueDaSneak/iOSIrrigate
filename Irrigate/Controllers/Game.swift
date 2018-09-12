@@ -25,7 +25,7 @@ class Game {
     func countUp(gameStart:Bool) {
         howMuchTime += 1
         print("count up called: \(howMuchTime): \(gameStart)")
-        if howMuchTime == 10 && gameStart == true {
+        if howMuchTime == 45 && gameStart == true {
             self.end()
         }
     }
