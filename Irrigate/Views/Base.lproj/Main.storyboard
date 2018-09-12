@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lto-II-6tY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HA1-o6-Psn">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -104,13 +104,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="N45-dH-35Q">
-                                <rect key="frame" x="130" y="104" width="154" height="147"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="154" id="ZPl-1z-5iN"/>
-                                    <constraint firstAttribute="height" constant="147" id="gGt-C0-p9r"/>
-                                </constraints>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ip9-gB-vv9" userLabel="Middle View">
                                 <rect key="frame" x="0.0" y="320" width="414" height="96"/>
                                 <subviews>
@@ -149,17 +142,50 @@
                                     <constraint firstAttribute="trailing" secondItem="Jwh-ae-2RM" secondAttribute="trailing" constant="16" id="tlG-uc-XM6"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="N45-dH-35Q">
+                                <rect key="frame" x="143" y="104" width="128" height="82"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="N45-dH-35Q" secondAttribute="height" multiplier="64:41" id="6Ce-Dy-ZOA"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMf-ek-cNm">
+                                <rect key="frame" x="0.0" y="194" width="414" height="118"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We need your email so we can contact you when you win!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LbG-X2-HBs">
+                                        <rect key="frame" x="131.66666666666666" y="27.666666666666657" width="150.99999999999997" height="63"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="63" id="4xu-BT-UFL"/>
+                                            <constraint firstAttribute="width" constant="151" id="vbM-pi-Ob5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="LbG-X2-HBs" firstAttribute="centerY" secondItem="fMf-ek-cNm" secondAttribute="centerY" id="OzL-KT-hOl"/>
+                                    <constraint firstAttribute="width" constant="414" id="Tg9-m7-ciZ"/>
+                                    <constraint firstItem="LbG-X2-HBs" firstAttribute="centerX" secondItem="fMf-ek-cNm" secondAttribute="centerX" id="b8V-QG-hCG"/>
+                                    <constraint firstAttribute="height" constant="118" id="muT-Yh-eev"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.71764705882352942" green="0.71372549019607845" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="sjj-B7-T5X" firstAttribute="top" secondItem="YVS-Ld-g96" secondAttribute="top" id="0aE-jx-fed"/>
-                            <constraint firstItem="Ip9-gB-vv9" firstAttribute="top" secondItem="N45-dH-35Q" secondAttribute="bottom" constant="69" id="7Qv-T2-684"/>
                             <constraint firstItem="Ip9-gB-vv9" firstAttribute="trailing" secondItem="YVS-Ld-g96" secondAttribute="trailing" id="9zX-kM-RcT"/>
-                            <constraint firstItem="N45-dH-35Q" firstAttribute="leading" secondItem="YVS-Ld-g96" secondAttribute="leading" constant="130" id="OpT-gt-a71"/>
-                            <constraint firstItem="YVS-Ld-g96" firstAttribute="trailing" secondItem="N45-dH-35Q" secondAttribute="trailing" constant="130" id="g7s-79-D9F"/>
+                            <constraint firstItem="Ip9-gB-vv9" firstAttribute="top" secondItem="fMf-ek-cNm" secondAttribute="bottom" constant="8" id="Bc5-JT-Y2s"/>
+                            <constraint firstItem="fMf-ek-cNm" firstAttribute="centerX" secondItem="tjU-Vo-3F0" secondAttribute="centerX" id="Dml-GJ-nWF"/>
+                            <constraint firstItem="YVS-Ld-g96" firstAttribute="trailing" secondItem="N45-dH-35Q" secondAttribute="trailing" constant="143" id="LFy-jC-StP"/>
+                            <constraint firstItem="N45-dH-35Q" firstAttribute="centerX" secondItem="tjU-Vo-3F0" secondAttribute="centerX" id="MKH-wA-auc"/>
+                            <constraint firstItem="N45-dH-35Q" firstAttribute="top" secondItem="sjj-B7-T5X" secondAttribute="bottom" constant="40" id="RMT-jj-nXv"/>
+                            <constraint firstItem="fMf-ek-cNm" firstAttribute="leading" secondItem="YVS-Ld-g96" secondAttribute="leading" id="g5S-tv-IX9"/>
+                            <constraint firstItem="N45-dH-35Q" firstAttribute="leading" secondItem="YVS-Ld-g96" secondAttribute="leading" constant="143" id="hKL-AS-DmL"/>
+                            <constraint firstItem="fMf-ek-cNm" firstAttribute="top" secondItem="N45-dH-35Q" secondAttribute="bottom" constant="8" id="hi4-e1-24V"/>
                             <constraint firstItem="Ip9-gB-vv9" firstAttribute="leading" secondItem="YVS-Ld-g96" secondAttribute="leading" id="sF8-vg-abX"/>
                             <constraint firstItem="sjj-B7-T5X" firstAttribute="trailing" secondItem="YVS-Ld-g96" secondAttribute="trailing" id="svn-S7-8Vq"/>
-                            <constraint firstItem="N45-dH-35Q" firstAttribute="top" secondItem="sjj-B7-T5X" secondAttribute="bottom" constant="40" id="tEy-5P-WPt"/>
+                            <constraint firstItem="fMf-ek-cNm" firstAttribute="trailing" secondItem="YVS-Ld-g96" secondAttribute="trailing" id="uXF-ib-U5O"/>
                             <constraint firstItem="sjj-B7-T5X" firstAttribute="leading" secondItem="YVS-Ld-g96" secondAttribute="leading" id="vf0-Kz-hnq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YVS-Ld-g96"/>
