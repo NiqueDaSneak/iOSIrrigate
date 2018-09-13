@@ -9,11 +9,15 @@
 import UIKit
 import SceneKit
 import ARKit
+import Firebase
+import FirebaseDatabase
 
 //import SwiftyTimer
 //import Each
 
 class Game {
+    
+    var ref: DatabaseReference!
     
     var howMuchTime:Int = 0
     var score:Int = 0
@@ -24,8 +28,8 @@ class Game {
 
     func countUp(gameStart:Bool) {
         howMuchTime += 1
-//        print("count up called: \(howMuchTime)")
-        if howMuchTime == 60 && gameStart == true {
+        print("count up called: \(howMuchTime): \(gameStart)")
+        if howMuchTime == 45 && gameStart == true {
             self.end()
         }
     }
@@ -47,10 +51,33 @@ class Game {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
     }
     
-    func start(scene: ARSCNView) {
+    func setup(scene:ARSCNView, sender:ARSceneViewController) {
+        
+        sender.gameStart = false
+        
         arScene = scene
+        let target = makeTarget()
+        target.position = generateTargetCoordinates(sceneNode: scene)
+        target.physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(node: target, options: [SCNPhysicsShape.Option.type: SCNPhysicsShape.ShapeType.convexHull, SCNPhysicsShape.Option.scale: 0.14]))
+        target.name = "startGameTarget"
+        target.physicsBody?.categoryBitMask = BitMaskCategory.targetCategory.rawValue
+        target.physicsBody?.collisionBitMask = BitMaskCategory.noCategory.rawValue
+        target.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
+        
+        arScene?.scene.rootNode.addChildNode(target)
+
+    }
+    
+    func restart(scene:ARSCNView) {
+        
+        scene.scene.rootNode.enumerateChildNodes{ (node,_) in
+            if node.name == "disabled" {
+                node.removeFromParentNode()
+            }
+        }
         
         self.startTimeOver()
+        self.score = 0
         print("Start func called")
         print("start adding targets to screen")
         createTarget(scene: scene)
@@ -79,31 +106,45 @@ class Game {
     }
         
     func end() {
-//        PopOverViewController().gameScore = score
-//        print("PopOverViewController().gameScore: \(PopOverViewController().gameScore)")
-//        print("Real Score: \(score)")
-//        PopOverViewController().setScore(score: score)
+        
+        ARSceneViewController().gameStart = false
+        
         let childNodes = arScene?.scene.rootNode.childNodes
         
         for node in childNodes! {
             if node.name == "target" {
                 node.name = "disabled"
                 node.geometry?.firstMaterial?.diffuse.contents = UIColor.darkGray
+                node.physicsBody?.categoryBitMask = BitMaskCategory.disabledTargetCategory.rawValue
                 node.physicsBody?.collisionBitMask = BitMaskCategory.ballCategory.rawValue
                 node.physicsBody?.contactTestBitMask = BitMaskCategory.noCategory.rawValue
             }
-            // change the nodes so that the collision detection and such are no longer functional
-            
-            // perhaps just remove them
         }
         
-        // loadGameOverview(finalScore: score, username: session.username???)
+//        createMenuTargets(scene: arScene!)
         print("End game")
         
         UserDefaults.standard.set(score, forKey: "currentScore")
         if UserDefaults.standard.integer(forKey: "highScore") < UserDefaults.standard.integer(forKey: "currentScore") {
              UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "currentScore"), forKey: "highScore")
         }
+        
+        ref = Database.database().reference()
+
+        ref.child("scores").childByAutoId().setValue([
+            "username": UserDefaults.standard.string(forKey: "sessionUsername"),
+            "email": UserDefaults.standard.string(forKey: "sessionEmail"),
+            "score": score
+        
+        ]) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+            } else {
+                print("Data saved successfully!")
+            }
+        }
+        
     }
     
 

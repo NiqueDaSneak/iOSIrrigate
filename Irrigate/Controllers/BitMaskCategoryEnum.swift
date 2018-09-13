@@ -14,5 +14,9 @@ enum BitMaskCategory:Int {
     case powerUpCategory = 5
     case crossBarCategory = 6
     case netCategory = 7
+    case startTrainingCategory = 8
+    case quitCategory = 9
+    case trainingTargetCategory = 10
+    case disabledTargetCategory = 11
     case noCategory = 0
 }
