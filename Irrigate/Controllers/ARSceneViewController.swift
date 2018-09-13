@@ -177,7 +177,7 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
 
                 self.isTraining = false
                 self.sceneView.scene.rootNode.enumerateChildNodes{ (node,_) in
-                    if node.name == "target" || node.name == "startCone" || node.name == "setUpGameCone" {
+                    if node.name == "target" || node.name == "startCone" || node.name == "setUpGameCone" || node.name == "disabled" {
                         node.removeFromParentNode()
                     }
                 }
@@ -399,8 +399,10 @@ class ARSceneViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsCont
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard anchor is ARPlaneAnchor else {return}
         DispatchQueue.main.async {
-            self.navLabelTop.text = "Touch the ground"
-            self.navLabelBottom.text = "to place goal"
+            if self.gameWorldAdded == false {
+                self.navLabelTop.text = "Touch the ground"
+                self.navLabelBottom.text = "to place goal"
+            }
 //            self.planeDetected.isHidden = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 3){

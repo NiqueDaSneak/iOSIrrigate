@@ -9,11 +9,15 @@
 import UIKit
 import SceneKit
 import ARKit
+import Firebase
+import FirebaseDatabase
 
 //import SwiftyTimer
 //import Each
 
 class Game {
+    
+    var ref: DatabaseReference!
     
     var howMuchTime:Int = 0
     var score:Int = 0
@@ -124,6 +128,23 @@ class Game {
         if UserDefaults.standard.integer(forKey: "highScore") < UserDefaults.standard.integer(forKey: "currentScore") {
              UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "currentScore"), forKey: "highScore")
         }
+        
+        ref = Database.database().reference()
+
+        ref.child("scores").childByAutoId().setValue([
+            "username": UserDefaults.standard.string(forKey: "sessionUsername"),
+            "email": UserDefaults.standard.string(forKey: "sessionEmail"),
+            "score": score
+        
+        ]) {
+            (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+            } else {
+                print("Data saved successfully!")
+            }
+        }
+        
     }
     
 
