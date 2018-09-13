@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-func createMenuTargets(scene:ARSCNView) {
+func  createMenuTargets(scene:ARSCNView) {
     
     scene.scene.rootNode.enumerateChildNodes{ (node,_) in
         if node.name == "startCone" || node.name == "quitTarget" || node.name == "trainTarget" {
@@ -19,7 +19,7 @@ func createMenuTargets(scene:ARSCNView) {
     }
     
     let greenTarget = makeLargeCone()
-    greenTarget.position = SCNVector3(-1,0,3)
+    greenTarget.position = SCNVector3(-4,0,-4)
     greenTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: greenTarget, options: [SCNPhysicsShape.Option.scale: 0.25]))
     greenTarget.name = "startCone"
     greenTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.green
@@ -29,7 +29,7 @@ func createMenuTargets(scene:ARSCNView) {
     greenTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
     
     let redTarget = makeLargeCone()
-    redTarget.position = SCNVector3(-3,0,3)
+    redTarget.position = SCNVector3(-5,0,-4)
     redTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: redTarget, options: [SCNPhysicsShape.Option.scale: 0.25]))
     redTarget.name = "quitTarget"
     redTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.red
@@ -39,7 +39,7 @@ func createMenuTargets(scene:ARSCNView) {
     redTarget.physicsBody?.contactTestBitMask = BitMaskCategory.ballCategory.rawValue
     
     let purpleTarget = makeLargeCone()
-    purpleTarget.position = SCNVector3(-2,0,3)
+    purpleTarget.position = SCNVector3(-6,0,-4)
     purpleTarget.physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: purpleTarget, options: [SCNPhysicsShape.Option.scale: 0.25]))
     purpleTarget.name = "trainTarget"
     purpleTarget.geometry?.firstMaterial?.diffuse.contents = UIColor.purple
